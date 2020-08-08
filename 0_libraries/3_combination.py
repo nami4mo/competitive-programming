@@ -1,62 +1,64 @@
-## bit all search
-N = 10
-for i in range(2 ** N):
-    comb = []
-    for j in range(N):
-        if ((i >> j) & 1): 
-            comb.append(j)
-    print(comb)
+'''
+    [K-bit full search]
+'''
 
-
-## bit all search (rapid)
+## use itertools.product  NOTE: これで十分 
+## bit,n = 3,5 -> [(0,0,0,0,0), (0,0,0,0,1), (0,0,0,0,2), (0,0,0,1,0), ...., (2,2,2,2,2)]
 from itertools import product
-pattern = 2
+bit, n = 3, 5
+ite = list(product(range(bit),repeat=n))
+for pattern in ite:
+    for i, v in enumerate(pattern):
+        pass
+
+
+## bit full search (normal)
 n = 10
-ite = product(range(pattern),repeat=n)
-for it in ite:
+for i in range(2**n):
     comb = []
-    for i,j in enumerate(reversed(it)):
-        if j == 1:
-            comb.append(i)
+    for j in range(n):
+        if ((i >> j) & 1): comb.append(j)
 
 
-## k-base all search
-# (0,0,0,0,0), (0,0,0,0,1), (0,0,0,0,2), (0,0,0,1,0), ...., (2,2,2,2,2)
-from itertools import product
-pattern = 3
-n = 5
-ite = product(range(pattern),repeat=n)
-for it in ite:
-    pass
-
-
+'''
+    [順列列挙]
+'''
+## [1,2,3],[1,2,4],[1,2,5],[1,3,2],...[5,4,3]
 from itertools import permutations
-n = 5
-cl = list(range(1,n+1))
-cpl = list(permutations(cl,3))
-# [1,2,3],[1,2,4],[1,2,5],[1,3,2],...[5,4,3]
+n, k = 5, 3
+ll = list(range(1,n+1))  # list of elements
+perml = list(permutations(ll, k))
 
 
-# nCk ( O(N) )
-N_MAX = 10**6
-MOD = 10**9 + 7
-fac, finv, inv = [0]*N_MAX ,[0]*N_MAX, [0]*N_MAX
-def com_init():
-    fac[0], fac[1] = 1, 1
-    finv[0], finv[1] = 1, 1
-    inv[1] = 1
-    for i in range(2, N_MAX):
-        fac[i] = fac[i - 1] * i % MOD
-        inv[i] = MOD - inv[MOD%i] * (MOD // i) % MOD
-        finv[i] = finv[i - 1] * inv[i] % MOD
-
-def com(n, k):
-    if n < k: return 0
-    if n < 0 or k < 0: return 0
-    return fac[n] * (finv[k] * finv[n - k] % MOD) % MOD
 
 
-# nCk (k<=10^7, n<=10^9)
+'''
+    [Combination]
+'''
+## N < 10**6
+class Combination:
+    def __init__(self, n_max=10**6, mod=10**9+7):
+        # self._n_max = n_max
+        self._fac, self._finv, self._inv = [0]*n_max, [0]*n_max, [0]*n_max
+        self._fac[0], self._fac[1] = 1, 1
+        self._finv[0], self._finv[1] = 1, 1
+        self._inv[1] = 1
+        for i in range(2, n_max):
+            self._fac[i] = self._fac[i - 1] * i % MOD
+            self._inv[i] = MOD - self._inv[MOD%i] * (MOD // i) % MOD
+            self._finv[i] = self._finv[i - 1] * self._inv[i] % MOD
+    def com(self, n, r):
+        if n < r: return 0
+        if n < 0 or r < 0: return 0
+        return self._fac[n] * (self._finv[r] * self._finv[n - r] % MOD) % MOD
+
+MOD = 10**9+7
+comb = Combination(10**6, MOD)
+comb.com(10,3)
+
+
+
+## k < 10**7, n< 10**9
 K_MAX = 10**7
 MOD = 10**9 + 7
 fac, finv, inv = [0]*(K_MAX+1), [0]*(K_MAX+1), [0]*(K_MAX+1)
@@ -66,7 +68,6 @@ def com_init():
     for i in range(2,K_MAX+1):
         inv[i] = MOD - inv[MOD%i] * (MOD // i) % MOD
         finv[i] = finv[i - 1] * inv[i] % MOD
-
 def com(n, k):
     ans = 1
     for i in range(n-k+1,n+1):
@@ -74,76 +75,15 @@ def com(n, k):
         ans %= MOD
     return (ans * finv[k]) % MOD
 
-class UnionFind():
-    def __init__(self, n):
-        self.n = n
-        self.parents = [-1] * n
 
-    def find(self, x):
-        if self.parents[x] < 0:
-            return x
-        else:
-            self.parents[x] = self.find(self.parents[x])
-            return self.parents[x]
-
-    def union(self, x, y):
-        x = self.find(x)
-        y = self.find(y)
-
-        if x == y:
-            return
-
-        if self.parents[x] > self.parents[y]:
-            x, y = y, x
-
-        self.parents[x] += self.parents[y]
-        self.parents[y] = x
-
-    def size(self, x):
-        return -self.parents[self.find(x)]
-
-    def same(self, x, y):
-        return self.find(x) == self.find(y)
-
-    def members(self, x):
-        root = self.find(x)
-        return [i for i in range(self.n) if self.find(i) == root]
-
-    def roots(self):
-        return [i for i, x in enumerate(self.parents) if x < 0]
-
-    def group_count(self):
-        return len(self.roots())
-
-    def all_group_members(self):
-        return {r: self.members(r) for r in self.roots()}
-
-    def __str__(self):
-        return '\n'.join('{}: {}'.format(r, self.members(r)) for r in self.roots())
-
-
-
-
-
-class Combination():
-    def __init__(self, n, mod):
-        self.n = n
-        self.mod = mod
-        self.fact = self.make_fact(n)
-        self.fact_inv = self.make_fact_inv(n)
-    def make_fact(self, n):#0~nの階乗を求める
-        res = [1]*(n+1)
-        for i in range(1, n+1):
-            res[i] = res[i-1]*i%self.mod
-        return res
-    def make_fact_inv(self, n):#0~nの階乗のmodに関する逆元を求める
-        fact_inv = [1]*(n+1)
-        fact_inv[n] = pow(self.fact[n], self.mod-2, self.mod)#フェルマーの小定理
-        for i in range(n, 0, -1):
-            fact_inv[i-1] = fact_inv[i]*i%self.mod
-        return fact_inv
-    def comb(self, m, k):
-        return self.fact[m]*self.fact_inv[k]*self.fact_inv[m-k]%self.mod
-
-comb = Combination(n, MOD)
-comb.comb(5,2) # -> 10
+## modinv
+def modinv(a,m):
+    b, u, v = m, 1, 0
+    while b:
+        t = a//b
+        a -= t*b
+        a,b = b,a
+        u -= t * v
+        u,v = v,u
+    u %= m
+    return u

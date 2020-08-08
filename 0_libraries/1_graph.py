@@ -1,8 +1,10 @@
-# ------------------------ dfs ------------------------
+'''
+    [DFS]
+'''
 import sys
 sys.setrecursionlimit(10**6)
 
-## tree DFS
+## ---------- tree DFS ----------
 def dfs(curr, pare, g):
     for chi in g[curr]:
         if chi == pare: continue
@@ -18,28 +20,29 @@ for _ in range(n-1):
 dfs(1, -1, g)
 
 
-
-## undirected graph DFS
+## ---------- undirected graph DFS ----------
 def dfs(node, visited, g):
     visited[node] = True
     for neib in g[node]:
         if not visited[neib]:
             dfs(neib, visited,g)
 
-N, M = map(int, input().split()) 
+n, m = map(int, input().split()) 
 g = [ [] for _ in range(n+1)]
-for _ in range(M):
+for _ in range(m):
     a, b = map(int, input().split()) 
     g[a].append(b)
     g[b].append(a)
-visited = [False] * (N+1)
+visited = [False] * (n+1)
 visited[0] = True
 dfs(1, visited, g)
 
 
 
-# ------------------------ bfs ------------------------
-## undirected graph BFS
+'''
+    [BFS]
+'''
+## ---------- undirected graph BFS ----------
 ### calc shortest length for each node 
 from collections import deque
 def bfs(start, g, visited):
@@ -62,7 +65,7 @@ for i in range(m):
 bfs(1, gl, visited)
 
 
-## grid map BFS
+## ---------- grid map BFS ----------
 ### calc shortest length of start to goal
 from collections import deque
 def bfs(sl, visited, sy, sx, gy, gx, h, w):
@@ -87,7 +90,10 @@ sl = [list(input()) for _ in range(h)]
 visited = [ [-1]*w for i in range(h)]
 
 
-# --------- dikstra ------------
+
+'''
+    [dikstra]
+'''
 import heapq
 def dijkstra(s, n, g):
     INF = 10**10
@@ -116,6 +122,9 @@ ans = dijkstra(s, v, g)
 
 
 
+'''
+    [warshall_floyd]
+'''
 def warshall_floyd(d,n):
     #d[i][j]: iからjへの最短距離
     for k in range(n):
