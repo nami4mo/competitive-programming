@@ -47,4 +47,14 @@ print(ok)
 '''
     [list]
 '''
-dp = [ [ [0]*L  for _ in range(M) ] for _ in range(N) ]
+dp = [ [ [0]*l  for _ in range(m) ] for _ in range(n) ]
+
+
+'''
+    [2-dim cumulative sum]
+'''
+al = [1,2,6,3,10]
+csums = [ [0]*(n+1) for _ in range(n+1)]
+for i in range(n):
+    for j in range(n):
+        csums[i+1][j+1] = csums[i+1][j] + csums[i][j+1] - csums[i][j] + al[i][j]
