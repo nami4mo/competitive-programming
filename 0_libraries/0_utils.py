@@ -58,3 +58,10 @@ csums = [ [0]*(n+1) for _ in range(n+1)]
 for i in range(n):
     for j in range(n):
         csums[i+1][j+1] = csums[i+1][j] + csums[i][j+1] - csums[i][j] + al[i][j]
+
+
+'''
+    [math.ceil]
+'''
+v = (a-1)//b + 1
+v = (a+b-1)//b
