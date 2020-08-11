@@ -1,35 +1,38 @@
-import sys
+from collections import deque
+def bfs(al, h, w):
+    q = deque([])
+    visited = [ [-1]*w for _ in range(h) ]
+    for i in range(h):
+        for j in range(w):
+            if al[i][j] == '#': 
+                q.append((i,j))
+                visited[i][j] = 0
 
-def d(pa,pb):
-    return abs(pa[0]-pb[0]) + abs(pa[1]-pb[1])
-
-input = sys.stdin.readline
-sys.setrecursionlimit(10**6)
-
-h, w = map(int, input().split()) 
-
-b_l = []
-for i in range(h):
-    a_l = list(input())[:-1]
-    for j, v in enumerate(a_l):
-        if v == '#':
-            b_l.append([i,j])
-
-all_max = 0
-n_b = len(b_l)
-for i in range(n_b):
-    curr_min = 9999
-    for j in range(n_b):
-        if i == j:continue
-        xi,yi = b_l[i][0], b_l[i][1]
-        xj,yj = b_l[j][0], b_l[j][1]
-        diff = abs(xi-xj) + abs(yi-yj)
-        curr_min = min(diff, curr_min)
-    all_max = max(all_max, curr_min)
+    while q:
+        i, j = q.popleft()
+        for ver, hor in ([1, 0], [-1, 0], [0, 1], [0, -1]):
+            ni, nj = i+ver, j+hor
+            if ni >= h or nj >= w or ni < 0 or nj < 0:
+                continue
+            if al[ni][nj] == '.' and visited[ni][nj] == -1:
+                visited[ni][nj] = visited[i][j] + 1
+                q.append((ni,nj))
+    return visited
 
 
-curr_max = 0
-for i in range(h):
-    p1 = [h,0]
-    p2 = [h,w-1]
-    
+def main():
+    h,w = map(int, input().split())
+    al = []
+    for _ in range(h):
+        row = list(input())
+        al.append(row)
+
+    visited = bfs(al,h,w)
+    ans = 0
+    for v in visited:
+        ans = max(max(v),ans)
+
+    print(ans)
+
+if __name__ == "__main__":
+    main()
