@@ -1,5 +1,10 @@
+'''
+    [LCM]
+'''
 from math import gcd
 def lcm(x,y): return (x * y) // gcd(x, y)
+
+
 
 '''
     [約数列挙]
@@ -10,6 +15,22 @@ for i in range(1, int(n**0.5)+1):
     if n%i == 0:
         divs.append(i)
         if i*i != n: divs.append(n//i)
+
+
+'''
+    [素数列挙] (N < 10^7)
+'''
+# https://python.ms/eratosthenes/#_2-%E9%AB%98%E9%80%9F%E7%89%88
+def primes(n):
+    is_prime = [True] * (n + 1)
+    is_prime[0] = False
+    is_prime[1] = False
+    for i in range(2, int(n**0.5) + 1):
+        if not is_prime[i]:
+            continue
+        for j in range(i * 2, n + 1, i):
+            is_prime[j] = False
+    return [i for i in range(n + 1) if is_prime[i]]
 
 
 '''
