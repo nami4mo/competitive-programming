@@ -10,8 +10,8 @@ for i in range(n):
     ai,bi,ci = abcl[i]
     for a in range(401):
         for b in range(401):
+            dp[i+1][a][b] = min(dp[i][a][b], dp[i+1][a][b])
             if a+ai < 401 and b+bi < 401:
-                dp[i+1][a][b] = min(dp[i][a][b], dp[i+1][a][b])
                 dp[i+1][a+ai][b+bi] = min(dp[i][a][b] + ci, dp[i+1][a+ai][b+bi])
 
 
