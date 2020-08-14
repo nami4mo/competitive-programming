@@ -76,7 +76,9 @@ def com(n, k):
     return (ans * finv[k]) % MOD
 
 
-## modinv
+'''
+    [modinv]
+'''
 def modinv(a,m):
     b, u, v = m, 1, 0
     while b:
@@ -87,3 +89,7 @@ def modinv(a,m):
         u,v = v,u
     u %= m
     return u
+
+# (e.g.) 13/5 (mod MOD)
+a = modinv(5,MOD)
+ans = (13*a)%MOD
