@@ -5,7 +5,8 @@
 ## use itertools.product  NOTE: これで十分 
 ## bit,n = 3,5 -> [(0,0,0,0,0), (0,0,0,0,1), (0,0,0,0,2), (0,0,0,1,0), ...., (2,2,2,2,2)]
 from itertools import product
-bit, n = 3, 5
+n = 5
+bit = 3
 ite = list(product(range(bit),repeat=n))
 for pattern in ite:
     for i, v in enumerate(pattern):
@@ -23,13 +24,22 @@ for i in range(2**n):
 '''
     [順列列挙]
 '''
-## [1,2,3],[1,2,4],[1,2,5],[1,3,2],...[5,4,3]
+## [(1,2,3),(1,2,4),(1,2,5),(1,3,2),...,(5,4,3)]
 from itertools import permutations
 n, k = 5, 3
 ll = list(range(1,n+1))  # list of elements
 perml = list(permutations(ll, k))
 
 
+'''
+    [組み合わせ列挙]
+'''
+# [(1,2,3),(1,2,4),(1,2,5),... (2,4,5),(3,4,5)]
+from itertools import combinations
+n, k = 5, 3
+ll = list(range(1,n+1))  # list of elements
+combl = list(combinations(ll, k))
+print(combl)
 
 
 '''
