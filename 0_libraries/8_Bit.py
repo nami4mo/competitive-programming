@@ -1,3 +1,8 @@
+
+# https://atcoder.jp/contests/abc140/tasks/abc140_e
+# https://atcoder.jp/contests/agc005/tasks/agc005_b
+# https://atcoder.jp/contests/abc157/tasks/abc157_e
+
 ''' 
     [Bit]
 '''
