@@ -39,8 +39,17 @@ class UnionFind():
     def group_count(self):
         return len(self.roots())
 
+    # too slow
     def all_group_members(self):
         return {r: self.members(r) for r in self.roots()}
+
+    def get_all_members(self):
+        pare_d = {}
+        for i in range(self.n):
+            parent = self.find(i)
+            pare_d.setdefault(parent,[])
+            pare_d[parent].append(i)
+        return list(pare_d.values())
 
     def __str__(self):
         return '\n'.join('{}: {}'.format(r, self.members(r)) for r in self.roots())
