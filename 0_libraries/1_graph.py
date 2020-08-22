@@ -69,11 +69,11 @@ bfs(1, gl, visited)
 ### calc shortest length of start to goal
 from collections import deque
 def bfs(sl, visited, sy, sx, gy, gx, h, w):
-    q = deque([[sy,sx]])
+    q = deque([(sy,sx)])
     visited[sy][sx] = 0
     while q:
         y, x = q.popleft()
-        if [y, x] == [gy, gx]:
+        if (y,x) == (gy,gx):
             return visited[gy][gx]
         for j, k in ([1, 0], [-1, 0], [0, 1], [0, -1]):
             ny, nx = y+j, x+k
@@ -81,14 +81,16 @@ def bfs(sl, visited, sy, sx, gy, gx, h, w):
                 continue
             if sl[ny][nx] == '.' and visited[ny][nx] == -1:
                 visited[ny][nx] = visited[y][x] + 1
-                q.append([ny,nx])
-                print(ny,nx, visited[ny][nx])
+                q.append((ny,nx))
     return -1
 
 h, w = map(int, input().split()) 
 sl = [list(input()) for _ in range(h)]
 visited = [ [-1]*w for i in range(h)]
 
+## --------- 01-BFS ---------
+# https://atcoder.jp/contests/abc176/tasks/abc176_d
+# abc176_d2.py
 
 
 '''
