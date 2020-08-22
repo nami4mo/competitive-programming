@@ -74,3 +74,7 @@ class MedianContainer:
 
     def get_right_sum(self):
         return self._right_sum
+
+
+    def get_half_len(self):
+        return len(self._left_q)
