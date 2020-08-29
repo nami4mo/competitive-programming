@@ -94,33 +94,33 @@ visited = [ [-1]*w for i in range(h)]
 
 
 '''
-    [dikstra]
+    [dikstra] 
+    - 単一始点用（1 対 全）/負の辺があるときは使用不可
+    - O(|E|*|logV|)... 全ノードが繋がっているとき(|E|=|V|**2)などは要注意
 '''
 import heapq
-def dijkstra(s, n, g):
-    INF = 10**10
+def dijkstra(s, n, g): # s: start, n: |V|, g; glaph 
+    INF = 10**18
     d = [INF] * n
     d[s] = 0
     que = [] # (a,b): a... shortest dist, b... v
-    heapq.heapify(que)
     heapq.heappush(que, (0, s))
 
     while que:
         dist, v = heapq.heappop(que)
         if d[v] < dist: continue # if v has been already used -> continue
-        for edge in g[v]:
-            to, cost = edge
-            if d[to] > d[v] + cost:
-                d[to] = d[v] + cost
-                heapq.heappush(que, (d[to], to))
+        for next_v, cost in g[v]:
+            if d[next_v] > d[v] + cost:
+                d[next_v] = d[v] + cost
+                heapq.heappush(que, (d[next_v], next_v))
     return d
 
 v,e,s = map(int, input().split())
-g = [ [] for _ in range(v)]
+g = [ [] for _ in range(v+1)]
 for _ in range(e):
     s,t,d = map(int, input().split())
     g[s].append((t,d))
-ans = dijkstra(s, v, g)
+ans = dijkstra(s, v+1, g)
 
 
 
