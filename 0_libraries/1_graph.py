@@ -134,3 +134,26 @@ def warshall_floyd(d,n):
             for j in range(n):
                 d[i][j] = min(d[i][j],d[i][k] + d[k][j])
     return d
+
+
+
+'''
+    [bellman_ford]
+'''
+def bellman_ford(s, n, g): # s: start, n: |V|, g; glaph 
+    INF = 10**18
+    d = [INF]*n
+    d[s] = 0
+    for i in range(n): # max n-1 loops. if update d[] in n-th loop -> negative cycle
+        update = False
+        for v_from, v_to, cost in g:
+            if d[v_to] > d[v_from] + cost:
+                d[v_to] = d[v_from] + cost
+                update = True
+        if not update:
+            return d
+    else: # if not break until n-th loop -> detect negative cycle
+        # may do something for negatice cycle
+        return None
+
+
