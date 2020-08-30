@@ -72,6 +72,27 @@ def p_factorization_t(n):
     return pf_cnt
 
 
+## osa_k
+## [3,4,6] -> [ {3:1}, {2:2}, {2:1, 3:1} ]  (list of)
+## O( NloglogN + |V|logN )... 前処理 NloglogN（エラトステネスの篩）, 各値に対して logN
+def p_factorization_osa_k(vl):
+    vmax = max(vl)
+    min_primes = list(range(vmax+1))  # initialize all values by its own value
+    for i in range(2, int(vmax**0.5) + 1):
+        if min_primes[i] != i: continue  # if not prime
+        for j in range(i,vmax+1,i): 
+            min_primes[j] = min(min_primes[j], i) # -> if min_primes[j] == j: min_primes[j] = i
+    results = []
+    for v in vl:
+        p_cnt = {}
+        curr_v = v
+        while curr_v > 1:
+            min_p = min_primes[curr_v]
+            p_cnt.setdefault(min_p,0)
+            p_cnt[min_p] += 1
+            curr_v //= min_p
+        results.append(p_cnt)
+    return results
 
 
 '''
