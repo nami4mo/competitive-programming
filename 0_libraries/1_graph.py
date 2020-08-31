@@ -140,6 +140,9 @@ def warshall_floyd(d,n):
 '''
     [bellman_ford]
 '''
+# g...  list of edges [ (from,to,cost), (from,to,cost), ...]
+# 負の閉路がゴールにたどりつくか判定するには、n-1回のループの後、距離更新時にINFを伝搬させるループをさらにn-1回行う (abc061_d)
+# もしくは、ゴールから逆順に辿った頂点 と スタートから辿った頂点 の＆をとって、不要な頂点（ゴールにたどり着かない閉路）を消す
 def bellman_ford(s, n, g): # s: start, n: |V|, g; glaph 
     INF = 10**18
     d = [INF]*n
@@ -155,5 +158,4 @@ def bellman_ford(s, n, g): # s: start, n: |V|, g; glaph
     else: # if not break until n-th loop -> detect negative cycle
         # may do something for negatice cycle
         return None
-
 
