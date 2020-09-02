@@ -65,3 +65,20 @@ for i in range(n):
 '''
 v = (a-1)//b + 1
 v = (a+b-1)//b
+
+
+'''
+    [count continuous values]
+    (e.g.) 1 1 2 3 3 2 -> [(1, 1), (2, 1), (3, 2), (2, 1)]
+'''
+al = list(map(int, input().split()))
+cntl = []
+prev = al[0]
+cnt = 0
+for a in al[1:]:
+    if prev == a: cnt+=1
+    else:
+        cntl.append((prev,cnt))
+        cnt = 1
+        prev = a
+cntl.append((prev,cnt))
