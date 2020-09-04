@@ -94,9 +94,10 @@ visited = [ [-1]*w for i in range(h)]
 
 
 '''
-    [dikstra] 
+    [dijkstra] 
     - 単一始点用（1 対 全）/負の辺があるときは使用不可
     - O(|E|*|logV|)... 全ノードが繋がっているとき(|E|=|V|**2)などは要注意
+    - 拡張dijkstra... abc164_e.py
 '''
 import heapq
 def dijkstra(s, n, g): # s: start, n: |V|, g; glaph 
