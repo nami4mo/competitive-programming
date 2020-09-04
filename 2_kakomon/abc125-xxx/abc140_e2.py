@@ -53,25 +53,17 @@ n = int(input())
 pl = list(map(int, input().split()))
 pll = []
 for i,p in enumerate(pl):
-    pll.append((p,i+1))
+    pll.append((p,i+2))
 
 pll.sort(reverse=True)
-bit = Bit(n)
+bit = Bit(n+1)
+bit.add(1,1)
 ans = 0
 for p,i in pll:
     ix = bit.sum(i)
-    # print(ix)
-    if ix == 0:
-        lmax = 0
-        lmin = 0
-        lcnt = 0
-    else:
-        lmax, _ = bit.lower_bound(ix)
-        if ix == 1:
-            lmin = 0
-        else:
-            lmin, _ = bit.lower_bound(ix-1)
-        lcnt = lmax - lmin
+    lmax, _ = bit.lower_bound(ix)
+    lmin, _ = bit.lower_bound(ix-1)
+    lcnt = lmax - lmin
     
     rmin, _ = bit.lower_bound(ix+1)
     rmax, _ = bit.lower_bound(ix+2)
@@ -81,8 +73,5 @@ for p,i in pll:
     ans += comb*p
 
     bit.add(i,1)
-    # print((p,i))
-    # print(lmin,lmax,i,rmin,rmax,'->',comb)
-    # print()
 
 print(ans)
