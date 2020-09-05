@@ -151,7 +151,7 @@ def bellman_ford(s, n, g): # s: start, n: |V|, g; glaph
     for i in range(n): # max n-1 loops. if update d[] in n-th loop -> negative cycle
         update = False
         for v_from, v_to, cost in g:
-            if d[v_to] > d[v_from] + cost:
+            if d[v_from] != INF and d[v_to] > d[v_from] + cost:
                 d[v_to] = d[v_from] + cost
                 update = True
         if not update:
