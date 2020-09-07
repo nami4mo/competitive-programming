@@ -63,6 +63,10 @@ class Combination:
         if n < 0 or r < 0: return 0
         return self._fac[n] * (self._finv[r] * self._finv[n - r] % self._mod) % self._mod
 
+    def perm(self,n,r):
+        if n < r: return 0
+        if n < 0 or r < 0: return 0
+        return self._fac[n] * (self._finv[n-r] % self._mod) % self._mod
 
 MOD = 10**9+7
 comb = Combination(10**6, MOD)
