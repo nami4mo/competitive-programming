@@ -35,7 +35,19 @@ class SegTree:
         return self.seg_f(v_l ,v_r)
 
 
-## 
+'''
+memo:
+GCD... INFをide_eleに設定して、片方がINFの場合はもう片方を返す
+def gcd2(a,b):
+    if a >= INF: return b
+    elif b >= INF: return a
+    else return gcd(a,b)
+
+i を x にする
+- 加算を使う
+- query(i,i+1) で現在の値を求め、その値を引く
+
+
 vl = [1,4,6,8,9]
 
 def add(a,b): return a+b
@@ -48,3 +60,4 @@ st.update(4,-4)
 print(st.query(2,5))
 st.update(0,-10)
 print(st.query(0,5))
+'''
