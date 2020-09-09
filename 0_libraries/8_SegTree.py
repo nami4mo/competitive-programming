@@ -14,7 +14,7 @@ class SegTree:
     def update(self, i, x):
         i += (self.leaf_n-1)
         self.tree[i] = x
-        while i > 1:
+        while i > 0:
             i = (i-1)//2
             self.tree[i] = self.seg_f(self.tree[2*i+1], self.tree[2*i+2])
 
