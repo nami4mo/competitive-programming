@@ -43,10 +43,6 @@ def gcd2(a,b):
     elif b >= INF: return a
     else return gcd(a,b)
 
-i を x にする
-- 加算を使う
-- query(i,i+1) で現在の値を求め、その値を引く
-
 
 vl = [1,4,6,8,9]
 
