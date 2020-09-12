@@ -69,12 +69,12 @@ v = (a+b-1)//b
 
 '''
     [count continuous values]
-    (e.g.) 1 1 2 3 3 2 -> [(1, 1), (2, 1), (3, 2), (2, 1)]
+    (e.g.) 1 1 2 3 3 2 -> [(1, 2), (2, 1), (3, 2), (2, 1)]
 '''
 al = list(map(int, input().split()))
 cntl = []
 prev = al[0]
-cnt = 0
+cnt = 1
 for a in al[1:]:
     if prev == a: cnt+=1
     else:
