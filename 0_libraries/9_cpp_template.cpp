@@ -1,49 +1,29 @@
-#include<algorithm>
-#include<bitset>
-#include<cmath>
-#include<complex>
-#include<deque>
-#include<functional>
-#include<iomanip>
-#include<iostream>
-#include<iterator>
-#include<map>
-#include<numeric>
-#include<queue>
-#include<set>
-#include<stack>
-#include<string>
-#include<unordered_map>
-#include<unordered_set>
-#include<utility>
-#include<vector>
+#include <bits/stdc++.h>
+
+struct Fast {Fast(){std::cin.tie(0);ios::sync_with_stdio(false);}} fast;
 
 using namespace std;
 typedef long long ll;
 typedef pair<ll,ll> P;
 
-#define REP(i,n) for(ll i=0 ; i<ll(n) ; i++)
+
+#define FOR(i,a,b) for(ll i = a ; i < b ; i++) // for i in range(a,b)
+#define FOR(i,n) for(ll i = 0 ; i < n ; i++) // for i in range(b)
+#define FORD(i,a,b) for(ll i = a ; i > b ; i--) // for i in range(a,b,-1)
 #define ALL(x) x.begin(),x.end()
+#define debug(x) cerr << #x << ": " << x << '\n'
+
+const int IINF = 1'001'001'001;
+const ll INF = 1'001'001'001'001'001'001ll;
+const int MOD = 1'000'000'007;
+
+
+void solve(){
+
+}
 
 int main(){
-    //ios::sync_with_stdio(false);
-    //cin.tie(nullptr);
-    int n;
-    cin >> n >> cout;
-
-    int l;
-    vector<int> ls(n);
-    REP(i,n) cin >> ls[i];
-
-    sort(ALL(l));
-    ll ans = 0;
-    for( int i = 0 ; i < n-2 ; i++ ){
-        for ( int j = i+1 : j < n-1 ; j++ ){
-            ll cnt = 0;
-            cnt = lower_bound(ls.begin()+j+1, ls.end());
-            ans += cnt
-        }
-    }
-    cout << ans << endl;
-
+    ios::sync_with_stdio(false);
+    cin.tie(nullptr);
+    solve();
 }
