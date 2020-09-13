@@ -19,6 +19,8 @@ for _ in range(n-1):
     g[b].append(a)
 dfs(1, -1, g)
 
+## ---------- tree DFS (not recursive) ----------
+
 
 ## ---------- undirected graph DFS ----------
 def dfs(node, visited, g):
