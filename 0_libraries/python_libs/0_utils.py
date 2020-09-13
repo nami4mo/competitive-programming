@@ -51,6 +51,15 @@ dp = [ [ [0]*l  for _ in range(m) ] for _ in range(n) ]
 
 
 '''
+    [1-dim cumulative sum]
+'''
+al = [1,2,6,3,10]
+csums = [0]*(n+1)
+for i,a in enumerate(al):
+    csums[i+1] = csums[i]+a
+
+
+'''
     [2-dim cumulative sum]
 '''
 al = [1,2,6,3,10]
