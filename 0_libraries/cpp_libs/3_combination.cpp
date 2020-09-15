@@ -1,13 +1,9 @@
-#include <bits/stdc++.h>
-using namespace std;
-typedef long long ll;
-typedef pair<ll,ll> P;
+#include "xx_def.hpp"
+
+
 const int MOD = 1000000007;
-
-
 const int MAX = 510000;
 long long fac[MAX], finv[MAX], inv[MAX];
-
 void com_init() {
     fac[0] = fac[1] = 1;
     finv[0] = finv[1] = 1;
