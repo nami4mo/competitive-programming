@@ -109,28 +109,3 @@ def modinv(a,m):
 # (e.g.) 13/5 (mod MOD)
 a = modinv(5,MOD)
 ans = (13*a)%MOD
-
-
-
-'''
-    [不定方程式] ax + by = 1
-'''
-from math import gcd
-def ext_gcd(a, b, x, y):
-    if b == 0:
-        x[0] = 1
-        y[0] = 0
-        return a
-    d = ext_gcd(b, a%b, y, x)
-    y[0] -= a//b * x[0]
-    return d
-
-a,b = 5,-3
-if gcd(a,b) == 1:
-    x = [0]
-    y = [0]
-    ext_gcd(8,6,x,y)
-    x,y = x[0],y[0]
-    print(x,y)
-else:
-    pass
