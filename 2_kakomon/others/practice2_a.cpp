@@ -40,7 +40,22 @@ const int MOD = 1'000'000'007;
 
 
 void solve(){
-
+    int n,q; cin >> n >> q;
+    dsu d(n);
+    REP(i,q){
+        int t,u,v; cin >> t >> u >> v;
+        if(t==0){
+            d.merge(u,v);
+        }
+        else{
+            if(d.same(u,v)){
+                cout << 1 << endl;
+            }
+            else{
+                cout << 0 << endl;
+            }
+        }
+    }
 }
 
 int main(){
