@@ -132,11 +132,14 @@ visited = [ [-1]*w for i in range(h)]
     - 単一始点用（1 対 全）/負の辺があるときは使用不可
     - O(|E|*|logV|)... 全ノードが繋がっているとき(|E|=|V|**2)などは要注意
     - 拡張dijkstra... abc164_e.py
+    - 最短経路復元は、コメント部分を外す（未テスト）
 '''
 import heapq
 def dijkstra(s, n, g): # s: start, n: |V|, g; glaph 
     INF = 10**18
     d = [INF] * n
+    #-- record the prev vertex of each one for restoring the route --
+    # prev_vl = [-1]*n 
     d[s] = 0
     que = [] # (a,b): a... shortest dist, b... v
     heapq.heappush(que, (0, s))
@@ -147,7 +150,18 @@ def dijkstra(s, n, g): # s: start, n: |V|, g; glaph
         for next_v, cost in g[v]:
             if d[next_v] > d[v] + cost:
                 d[next_v] = d[v] + cost
+                # prev_vl[next_v] = v
                 heapq.heappush(que, (d[next_v], next_v))
+
+    ## resotre the route
+    # route = [g]
+    # curr_v = g
+    # while True:
+    #     prev_v = prev_vl[curr_v]
+    #     if prev_v == -1: break
+    #     else: route.append(prev_v)
+    # route = route[::-1]
+    # return d, route
     return d
 
 v,e,s = map(int, input().split())
