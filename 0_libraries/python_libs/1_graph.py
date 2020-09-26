@@ -154,8 +154,9 @@ def dijkstra(s, n, g): # s: start, n: |V|, g; glaph
                 heapq.heappush(que, (d[next_v], next_v))
 
     ## resotre the route
-    # route = [g]
-    # curr_v = g
+    # goal = n-1 # set goal here (do you need loop?)
+    # route = [goal]
+    # curr_v = goal
     # while True:
     #     prev_v = prev_vl[curr_v]
     #     if prev_v == -1: break
