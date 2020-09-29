@@ -1,9 +1,9 @@
 #include <bits/stdc++.h>
 #if __has_include(<atcoder/all>)
     #include <atcoder/all>
+    using namespace atcoder;
 #endif
 using namespace std;
-using namespace atcoder;
 namespace defines{
     typedef long long ll;
     typedef pair<ll,ll> P;
