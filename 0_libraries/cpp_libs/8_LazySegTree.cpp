@@ -270,5 +270,5 @@ namespace atcoder
     };
 
 } // namespace atcoder
-
 #endif // ATCODER_LAZYSEGTREE_HPP
+using namespace atcoder;
