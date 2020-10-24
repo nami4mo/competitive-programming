@@ -1,0 +1,5 @@
+n,k,m = map(int, input().split())
+al = list(map(int, input().split()))
+target = n*m-sum(al)
+if target > k: print(-1)
+else: print(max(target,0))

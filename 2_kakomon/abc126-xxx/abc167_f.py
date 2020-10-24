@@ -1,30 +1,41 @@
 n = int(input())
-sl_minus = []
-sl_plus = []
-left_plus = 0
+slp = []
+slm = []
 for _ in range(n):
-    s = list(input())
-    curr_val = 0
-    smin = 0
+    s = input()
+    max_r = 0
+    curr_lr = 0
     for si in s:
-        if si == '(': curr_val += 1
-        else: curr_val -= 1
-        smin = min(smin, curr_val)
-    if smin >= 0:
-        left_plus += curr_val
-    elif curr_val >= 0:
-        sl_plus.append(((-1)*smin, curr_val))
-    elif curr_val < 0:
-        sl_minus.append(((-1)*smin, curr_val))
+        if si=='(': curr_lr+=1
+        else: curr_lr-=1
+        max_r = max(max_r, (-1)*curr_lr)
 
-print(left_plus)
-print(sl)
+    max_l = 0
+    curr_lr = 0
+    for si in s[::-1]:
+        if si=='(': curr_lr+=1
+        else: curr_lr-=1
+        max_l = max(max_l, curr_lr)
 
-sl_plus.sort()
-for smin, v in sl_plis:
-    if left_plus < smin:
+    if curr_lr >= 0:
+        slp.append((max_l,max_r,curr_lr))
+    else:
+        slm.append((max_l,max_r,curr_lr))
+
+slp.sort(key=lambda x: x[1])
+slm.sort(key=lambda x: -x[0])
+# slp.sort(key=lambda x: (x[0],-x[1]))
+# slm.sort(key=lambda x: x[0]-x[1])
+
+curr_l = 0
+for max_l, max_r, lp in slp+slm:
+    if curr_l < max_r:
         print('No')
         exit()
-    left_plus += v
+    else:
+        curr_l+=lp
 
-for 
+if curr_l == 0:
+    print('Yes')
+else:
+    print('No')
