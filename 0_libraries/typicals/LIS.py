@@ -12,7 +12,7 @@ dp = [INF]*(n+1)
 dp[0] = -INF
 
 for i, a in enumerate(al):
-    ind = bisect_left(dp, a) - 1 # max index of "value <= a"
-    dp[ind+1] = a
+    ind = bisect_left(dp, a) # max index of "value <= a"
+    dp[ind] = a
 ans = bisect_left(dp, INF) - 1 # cnt of "value < INF" and remove 0-index
 print(ans)
