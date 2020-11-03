@@ -1,9 +1,8 @@
 # competive-programming
 My competive programming life started from 2020/5!  
-I use only AtCoder so far.
 
-Atcoder: Cyan ([nasuo](https://atcoder.jp/users/nasuo))
-Codeforces: Cyan（internal rating: Blue）
+Atcoder: Cyan ([nasuo](https://atcoder.jp/users/nasuo))  
+Codeforces: Blue ([nasuo](https://codeforces.com/profile/nasuo))   
 PAST 3rd: ADVANCED  
 
 ## 0_libraries
