@@ -1,7 +1,9 @@
 '''
     [doubling]
+    https://algo-logic.info/doubling/
     https://atcoder.jp/contests/abc167/tasks/abc167_d
     https://atcoder.jp/contests/abc179/tasks/abc179_e
+    https://atcoder.jp/contests/abc013/tasks/abc013_4
 '''
 
 from math import log2
