@@ -25,3 +25,6 @@ template<class T> void dbgll_f(string name, vector<vector<T>> xll){
         cerr << '\n';
     }
 }
+const int IINF = 1'001'001'001;
+const ll INF = 1'001'001'001'001'001'001ll;
+const int MOD = 1'000'000'007;
