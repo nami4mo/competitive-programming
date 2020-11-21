@@ -91,3 +91,15 @@ for a in al[1:]:
         cnt = 1
         prev = a
 cntl.append((prev,cnt))
+
+
+from time import sleep
+def print_overwrite(list2d, val_width=5, sleep_sec=1.0, header=None):
+    val_str = f'{header}\n' if header else '' 
+    for row in list2d: 
+        row_str = ' '.join(map(lambda v: str(v).rjust(val_width),row))
+        val_str += f'{row_str}\n'
+    new_line_cnt = val_str.count('\n')
+    val_str += f'\033[{new_line_cnt}A'
+    print(val_str, end='')
+    sleep(sleep_sec)
