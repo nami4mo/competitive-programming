@@ -3,7 +3,7 @@
 vector<ll> dijkstra(int start, int n, vector<vector<P>> &g){
     vector<ll> d(n,INF);
     d[start] = 0;
-    priority_queue<P> q;
+    priority_queue<P, vector<P>, greater<P>> q;
     q.push(P(0,start));
 
     while(!q.empty()){
