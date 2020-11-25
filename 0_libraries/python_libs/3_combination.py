@@ -12,6 +12,13 @@ for pattern in ite:
     for i, v in enumerate(pattern):
         pass
 
+## bit full search
+from itertools import product
+ite = list(product(range(2),repeat=n))
+for pattern in ite:
+    for i, v in enumerate(pattern):
+        pass
+
 
 ## bit full search (normal)
 n = 10
