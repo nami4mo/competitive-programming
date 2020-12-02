@@ -34,38 +34,47 @@ namespace defines{
 }
 using namespace defines;
 
+const int IINF = 1'001'001'001;
+const ll INF = 1'001'001'001'001'001'001ll;
+const int MOD = 1'000'000'007;
 
-
-const int MOD = 1000000007;
-const int MAX = 510000;
-long long fac[MAX], finv[MAX], inv[MAX];
-void com_init() {
-    fac[0] = fac[1] = 1;
-    finv[0] = finv[1] = 1;
-    inv[1] = 1;
-    for (int i = 2; i < MAX; i++){
-        fac[i] = fac[i - 1] * i % MOD;
-        inv[i] = MOD - inv[MOD%i] * (MOD / i) % MOD;
-        finv[i] = finv[i - 1] * inv[i] % MOD;
+unordered_map<ll,ll> p_factorization_m2(ll n){
+    unordered_map<ll,ll> facs;
+    if(n == 1) return facs;
+    ll curr_n = n;
+    for(ll i = 2 ; i*i <= n ; i++){
+        if(curr_n%i == 0){
+            ll cnt = 0;
+            while(curr_n%i == 0){
+                cnt += 1;
+                curr_n /= i;
+            }
+            facs[i] = cnt;
+        }
     }
-}
-
-long long com(int n, int k){
-    if (n < k) return 0;
-    if (n < 0 || k < 0) return 0;
-    return fac[n] * (finv[k] * finv[n - k] % MOD) % MOD;
+    if(curr_n != 1) facs[curr_n] = 1;
+    return facs;
 }
 
 void solve(){
-    ll n,k; cin >> n >> k;
-    com_init();
-    ll rem = k%n;
-    if(n>k){
-        cout << com(n+k-1,k) << endl;
+    ll a,b; cin >> a >> b;
+    unordered_map<ll,ll> cnts;
+    FOR(i,b+1,a+1){
+        unordered_map<ll,ll> p_facts = p_factorization_m2(i);
+        for(auto&[k,v]:p_facts){
+            if(cnts.find(k)==cnts.end()){
+                cnts[k]=0;
+            }
+            cnts[k]+=v;
+        }
     }
-    else{
-        cout << com(n,rem) << endl;
+    ll ans = 1;
+    for(auto&[k,v]:cnts){
+        // cout << k << " " << endl;
+        ans*=(v+1);
+        ans%=MOD;
     }
+    cout<<ans<<'\n';
 }
 
 int main(){
@@ -74,4 +83,3 @@ int main(){
     solve();
     return 0;
 }
-

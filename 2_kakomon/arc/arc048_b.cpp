@@ -34,37 +34,38 @@ namespace defines{
 }
 using namespace defines;
 
+const int IINF = 1'001'001'001;
+const ll INF = 1'001'001'001'001'001'001ll;
+const int MOD = 1'000'000'007;
 
-
-const int MOD = 1000000007;
-const int MAX = 510000;
-long long fac[MAX], finv[MAX], inv[MAX];
-void com_init() {
-    fac[0] = fac[1] = 1;
-    finv[0] = finv[1] = 1;
-    inv[1] = 1;
-    for (int i = 2; i < MAX; i++){
-        fac[i] = fac[i - 1] * i % MOD;
-        inv[i] = MOD - inv[MOD%i] * (MOD / i) % MOD;
-        finv[i] = finv[i - 1] * inv[i] % MOD;
-    }
-}
-
-long long com(int n, int k){
-    if (n < k) return 0;
-    if (n < 0 || k < 0) return 0;
-    return fac[n] * (finv[k] * finv[n - k] % MOD) % MOD;
-}
+int rhcnt[100001][4];
 
 void solve(){
-    ll n,k; cin >> n >> k;
-    com_init();
-    ll rem = k%n;
-    if(n>k){
-        cout << com(n+k-1,k) << endl;
+    ll n; cin >> n;
+    vector<P> rhl(n);
+    vector<vector<int>> rhcnt(100001,vector<int>(4,0));    
+    REP(i,n){
+        ll r,h; cin >> r >> h;
+        rhl[i] = P(r,h);
+        rhcnt[r][h]++;
     }
-    else{
-        cout << com(n,rem) << endl;
+    vector<int> rcsum;
+    int c = 0;
+    REP(i,100001){
+        c += (rhcnt[i][1]+rhcnt[i][2]+rhcnt[i][3]);
+        rcsum.push_back(c);
+    }
+
+    for( auto& [r,h] : rhl ){
+        int win = 0;
+        win += rcsum[r-1];
+        if(h==1) win+=rhcnt[r][2];
+        if(h==2) win+=rhcnt[r][3];
+        if(h==3) win+=rhcnt[r][1];
+
+        int draw = rhcnt[r][h]-1;
+        int lose = n-1-win-draw;
+        cout<< win << " " << lose << " " << draw << '\n';
     }
 }
 
@@ -74,4 +75,3 @@ int main(){
     solve();
     return 0;
 }
-

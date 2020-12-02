@@ -15,7 +15,6 @@ void sample_char_map(){
     }
 }
 
-
 void binary_search(){
     ll ok = 0;
     ll ng = 1e9+1;

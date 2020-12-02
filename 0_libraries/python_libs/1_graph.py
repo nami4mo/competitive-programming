@@ -160,7 +160,8 @@ def dijkstra(s, n, g): # s: start, n: |V|, g; glaph
     # while True:
     #     prev_v = prev_vl[curr_v]
     #     if prev_v == -1: break
-    #     else: route.append(prev_v)
+    #     route.append(prev_v)
+    #     curr_v = prev_v
     # route = route[::-1]
     # return d, route
     return d

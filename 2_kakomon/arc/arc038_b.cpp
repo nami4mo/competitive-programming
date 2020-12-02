@@ -34,38 +34,29 @@ namespace defines{
 }
 using namespace defines;
 
-
-
-const int MOD = 1000000007;
-const int MAX = 510000;
-long long fac[MAX], finv[MAX], inv[MAX];
-void com_init() {
-    fac[0] = fac[1] = 1;
-    finv[0] = finv[1] = 1;
-    inv[1] = 1;
-    for (int i = 2; i < MAX; i++){
-        fac[i] = fac[i - 1] * i % MOD;
-        inv[i] = MOD - inv[MOD%i] * (MOD / i) % MOD;
-        finv[i] = finv[i - 1] * inv[i] % MOD;
-    }
-}
-
-long long com(int n, int k){
-    if (n < k) return 0;
-    if (n < 0 || k < 0) return 0;
-    return fac[n] * (finv[k] * finv[n - k] % MOD) % MOD;
-}
+const int IINF = 1'001'001'001;
+const ll INF = 1'001'001'001'001'001'001ll;
+const int MOD = 1'000'000'007;
 
 void solve(){
-    ll n,k; cin >> n >> k;
-    com_init();
-    ll rem = k%n;
-    if(n>k){
-        cout << com(n+k-1,k) << endl;
+    ll h,w; cin >> h >> w;
+    vector<string> cl(h);
+    REP(i,h){
+        cin >> cl[i];
     }
-    else{
-        cout << com(n,rem) << endl;
+    vector<vector<bool>> dp(h, vector<bool>(w,false));
+    FORD(i,h-1,-1){
+        FORD(j,w-1,-1){
+            bool ans = false;
+            if(i!=h-1 && cl[i+1][j] =='.' && !dp[i+1][j]) ans=true;
+            if(j!=w-1 && cl[i][j+1] =='.' && !dp[i][j+1]) ans=true;
+            if(i!=h-1 && j!=w-1 && cl[i+1][j+1] =='.' && !dp[i+1][j+1]) ans=true;
+            dp[i][j] = ans;
+        }
     }
+    if(dp[0][0])cout<<"First"<<endl;
+    else cout<<"Second"<<endl;
+    // DEBUGLL(dp);
 }
 
 int main(){
@@ -74,4 +65,3 @@ int main(){
     solve();
     return 0;
 }
-

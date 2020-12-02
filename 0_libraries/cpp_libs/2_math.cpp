@@ -89,6 +89,24 @@ map<ll,ll> p_factorization_m(ll n){
     return facs;
 }
 
+unordered_map<ll,ll> p_factorization_m2(ll n){
+    unordered_map<ll,ll> facs;
+    if(n == 1) return facs;
+    ll curr_n = n;
+    for(ll i = 2 ; i*i <= n ; i++){
+        if(curr_n%i == 0){
+            ll cnt = 0;
+            while(curr_n%i == 0){
+                cnt += 1;
+                curr_n /= i;
+            }
+            facs[i] = cnt;
+        }
+    }
+    if(curr_n != 1) facs[curr_n] = 1;
+    return facs;
+}
+
 
 int main(){
     cout << pow_mod(3,4,5) << endl;

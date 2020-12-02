@@ -34,38 +34,36 @@ namespace defines{
 }
 using namespace defines;
 
+const int IINF = 1'001'001'001;
+const ll INF = 1'001'001'001'001'001'001ll;
+const int MOD = 1'000'000'007;
 
+vector<vector<int>> gl(100001);
 
-const int MOD = 1000000007;
-const int MAX = 510000;
-long long fac[MAX], finv[MAX], inv[MAX];
-void com_init() {
-    fac[0] = fac[1] = 1;
-    finv[0] = finv[1] = 1;
-    inv[1] = 1;
-    for (int i = 2; i < MAX; i++){
-        fac[i] = fac[i - 1] * i % MOD;
-        inv[i] = MOD - inv[MOD%i] * (MOD / i) % MOD;
-        finv[i] = finv[i - 1] * inv[i] % MOD;
+int dfs(int node){
+    if(gl[node].size() == 0){
+        return 0;
     }
-}
-
-long long com(int n, int k){
-    if (n < k) return 0;
-    if (n < 0 || k < 0) return 0;
-    return fac[n] * (finv[k] * finv[n - k] % MOD) % MOD;
+    vector<int> dists;
+    for(int neib : gl[node]){
+        dists.push_back(dfs(neib));
+    }
+    sort(ALL(dists));
+    int cnt = 0;
+    for(int d : dists){
+        cnt = max(cnt+1,d+1);
+    }
+    return cnt;
 }
 
 void solve(){
-    ll n,k; cin >> n >> k;
-    com_init();
-    ll rem = k%n;
-    if(n>k){
-        cout << com(n+k-1,k) << endl;
+    ll n; cin >> n;
+    REP(i,n-1){
+        int a; cin >> a;
+        gl[a].push_back(i+2);
     }
-    else{
-        cout << com(n,rem) << endl;
-    }
+    int ans = dfs(1);
+    cout << ans << endl;
 }
 
 int main(){
@@ -74,4 +72,3 @@ int main(){
     solve();
     return 0;
 }
-

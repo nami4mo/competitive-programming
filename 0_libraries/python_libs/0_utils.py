@@ -5,6 +5,8 @@ import sys
 input = sys.stdin.readline
 input().rstrip() # remove last '\n'
 
+sys.setrecursionlimit(10**6)
+
 a, b = map(int, input().split()) 
 al = list(map(int, input().split())) 
 

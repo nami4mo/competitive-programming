@@ -34,38 +34,39 @@ namespace defines{
 }
 using namespace defines;
 
-
-
-const int MOD = 1000000007;
-const int MAX = 510000;
-long long fac[MAX], finv[MAX], inv[MAX];
-void com_init() {
-    fac[0] = fac[1] = 1;
-    finv[0] = finv[1] = 1;
-    inv[1] = 1;
-    for (int i = 2; i < MAX; i++){
-        fac[i] = fac[i - 1] * i % MOD;
-        inv[i] = MOD - inv[MOD%i] * (MOD / i) % MOD;
-        finv[i] = finv[i - 1] * inv[i] % MOD;
-    }
-}
-
-long long com(int n, int k){
-    if (n < k) return 0;
-    if (n < 0 || k < 0) return 0;
-    return fac[n] * (finv[k] * finv[n - k] % MOD) % MOD;
-}
+const int IINF = 1'001'001'001;
+const ll INF = 1'001'001'001'001'001'001ll;
+const int MOD = 1'000'000'007;
 
 void solve(){
     ll n,k; cin >> n >> k;
-    com_init();
-    ll rem = k%n;
-    if(n>k){
-        cout << com(n+k-1,k) << endl;
+    vector<bool> ex(n+1,false);
+    vector<ll> xl(n); 
+    vector<int> num_to_i(n+1,0);
+    REP(i,n) {
+        cin >> xl[i];
+        num_to_i[xl[i]] = i+1;
     }
-    else{
-        cout << com(n,rem) << endl;
+    ll thre = 0;
+    FOR(i,0,k){
+        ex[xl[i]] = true;
+        thre = max(thre, xl[i]);
     }
+    cout << num_to_i[thre] << '\n';
+
+    FOR(i,k,n){
+        if(thre < xl[i]){
+            cout << num_to_i[thre] << '\n';
+            continue;
+        }
+        ex[xl[i]] = true;
+        while(true){
+            thre--;
+            if(ex[thre]) break;
+        }
+        cout << num_to_i[thre] << '\n';
+    }
+
 }
 
 int main(){
@@ -74,4 +75,3 @@ int main(){
     solve();
     return 0;
 }
-

@@ -34,38 +34,56 @@ namespace defines{
 }
 using namespace defines;
 
+const int IINF = 1'001'001'001;
+const ll INF = 1'001'001'001'001'001'001ll;
+const int MOD = 1'000'000'007;
 
+int rhcnt[100001][4];
 
-const int MOD = 1000000007;
-const int MAX = 510000;
-long long fac[MAX], finv[MAX], inv[MAX];
-void com_init() {
-    fac[0] = fac[1] = 1;
-    finv[0] = finv[1] = 1;
-    inv[1] = 1;
-    for (int i = 2; i < MAX; i++){
-        fac[i] = fac[i - 1] * i % MOD;
-        inv[i] = MOD - inv[MOD%i] * (MOD / i) % MOD;
-        finv[i] = finv[i - 1] * inv[i] % MOD;
-    }
-}
+int dx[4] = {-1,1,0,0};
+int dy[4] = {0,0,-1,1};
 
-long long com(int n, int k){
-    if (n < k) return 0;
-    if (n < 0 || k < 0) return 0;
-    return fac[n] * (finv[k] * finv[n - k] % MOD) % MOD;
-}
 
 void solve(){
-    ll n,k; cin >> n >> k;
-    com_init();
-    ll rem = k%n;
-    if(n>k){
-        cout << com(n+k-1,k) << endl;
+    ll h,w; cin >> h >> w;
+    char sl[h][w];
+    P start, goal;
+    REP(i,h){
+        REP(j,w){
+            cin >> sl[i][j];
+            if(sl[i][j] == 's') start = P(i,j);
+            if(sl[i][j] == 'g') goal = P(i,j);
+        }
     }
-    else{
-        cout << com(n,rem) << endl;
+
+    vector<vector<int>> break_cnts(h,vector<int>(w,4));
+    deque<P> q;
+    q.push_back(start);
+    break_cnts[start.first][start.second] = 0;
+    bool ans = false;
+    while(!q.empty()){
+        auto [y,x] = q.front(); q.pop_front();
+        REP(i,4){
+            int yy = y+dy[i];
+            int xx = x+dx[i];
+            if( yy < 0 || h <= yy || xx < 0 || w <= xx ){
+                continue;
+            }
+            if( sl[yy][xx] == '.' && break_cnts[yy][xx] > break_cnts[y][x] ){
+                break_cnts[yy][xx] = break_cnts[y][x];
+                q.push_back(P(yy,xx));
+            }
+            else if( sl[yy][xx] == '#' && break_cnts[yy][xx] > break_cnts[y][x]+1 && break_cnts[y][x] < 2){
+                break_cnts[yy][xx] = break_cnts[y][x]+1;
+                q.push_back(P(yy,xx));
+            }
+            else if( sl[yy][xx] == 'g' ){
+                ans = true;
+            }
+        }
     }
+    if(ans)cout<<"YES"<<'\n';
+    else cout<<"NO"<<'\n';
 }
 
 int main(){
@@ -74,4 +92,3 @@ int main(){
     solve();
     return 0;
 }
-
