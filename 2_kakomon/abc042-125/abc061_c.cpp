@@ -38,11 +38,24 @@ using namespace defines;
 const int IINF = 1'001'001'001;
 const ll INF = 1'001'001'001'001'001'001ll;
 const int MOD = 1'000'000'007;
-// using mint = modint1000000007;
-// using mint = modint998244353;
 
+ll cnts[100001];
 
 void solve(){
+    Fill(cnts,0);
+    ll n,k; cin >> n >> k;
+    REP(i,n){
+        ll a,b; cin >> a >> b;
+        cnts[a]+=b;
+    }
+    ll cnt=0;
+    REP(num,100001){
+        cnt+=cnts[num];
+        if(cnt>=k){
+            cout<<num<<endl;
+            return;
+        }
+    }
 }
 
 int main(){

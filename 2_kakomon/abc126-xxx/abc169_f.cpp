@@ -31,18 +31,34 @@ namespace defines{
             cerr << '\n';
         }
     }
-    template<typename A, size_t N, typename T> void Fill(A (&array)[N], const T &val){std::fill( (T*)array, (T*)(array+N), val );}
 }
 using namespace defines;
 
 const int IINF = 1'001'001'001;
 const ll INF = 1'001'001'001'001'001'001ll;
 const int MOD = 1'000'000'007;
-// using mint = modint1000000007;
-// using mint = modint998244353;
 
+using mint = modint998244353;
 
 void solve(){
+    ll n,s; cin >> n >> s;
+    vector<ll> al(n); REP(i,n) cin >> al[i];
+    vector<vector<mint>> dp(n+1,vector<mint>(s+1,0));
+    // dp[0][0] = mint(2).pow(n);
+    REP(i,n){
+        ll a = al[i];
+        if(a<=s){
+            dp[i+1][a] += mint(2).pow(n-1);
+        }
+        FOR(j,1,s+1){
+            dp[i+1][j] += dp[i][j];
+            if(j+a<=s){
+                dp[i+1][j+a] += dp[i][j]/2;
+            }
+        }
+    }
+    cout << dp[n][s].val() << endl;
+
 }
 
 int main(){

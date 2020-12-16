@@ -31,18 +31,53 @@ namespace defines{
             cerr << '\n';
         }
     }
-    template<typename A, size_t N, typename T> void Fill(A (&array)[N], const T &val){std::fill( (T*)array, (T*)(array+N), val );}
 }
 using namespace defines;
 
 const int IINF = 1'001'001'001;
 const ll INF = 1'001'001'001'001'001'001ll;
 const int MOD = 1'000'000'007;
-// using mint = modint1000000007;
-// using mint = modint998244353;
 
+using mint = modint998244353;
+
+int a,b;
+mint dp[3001][3001];
+bool used[3001][3001];
+
+mint rec(int y, int x){
+    if(used[y][x]){
+        return dp[y][x];
+    }
+    if(y==a && x==b){
+        return 1;
+    }
+    if(y<a || x<b){
+        return 0;
+    }
+
+    if(y==a){
+        dp[y][x] = rec(y,x-1)*y;
+    }
+    else if(x==b){
+        dp[y][x] = rec(y-1,x)*x;
+    }
+    else{
+        dp[y][x] = rec(y-1,x)*x + rec(y,x-1)*y - rec(y-1,x-1)*(y-1)*(x-1);
+    }
+    used[y][x]=true;
+    return dp[y][x];
+}
 
 void solve(){
+    int c,d;
+    cin>>a>>b>>c>>d;
+    REP(i,3001){
+        REP(j,3001){
+            dp[i][j]=0;
+            used[i][j]=false;
+        }
+    }
+    cout << rec(c,d).val() << endl;
 }
 
 int main(){

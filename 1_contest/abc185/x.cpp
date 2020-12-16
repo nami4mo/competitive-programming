@@ -1,9 +1,9 @@
 #include <bits/stdc++.h>
 #if __has_include(<atcoder/all>)
     #include <atcoder/all>
-    using namespace atcoder;
 #endif
 using namespace std;
+using namespace atcoder;
 namespace defines{
     typedef long long ll;
     typedef pair<ll,ll> P;
@@ -31,23 +31,70 @@ namespace defines{
             cerr << '\n';
         }
     }
-    template<typename A, size_t N, typename T> void Fill(A (&array)[N], const T &val){std::fill( (T*)array, (T*)(array+N), val );}
 }
 using namespace defines;
 
 const int IINF = 1'001'001'001;
 const ll INF = 1'001'001'001'001'001'001ll;
 const int MOD = 1'000'000'007;
-// using mint = modint1000000007;
-// using mint = modint998244353;
 
+
+
+// lazy_segtree<S, op, e, F, mapping, composition, id> seg(int n);
+
+struct S{
+    mint v;
+    int keta;
+    S() : v(1), keta(1) {}
+    S(mint v, int keta) : v(v), keta(keta) {}
+};
+
+S op(S a, S b){
+    return S{a.v*keta_to_mint10[b.keta] + b.v, a.keta+b.keta};
+}
+
+S e(){ return S{0,0}; }
+
+using F = int;
+const F ID = 0;
+
+S mapping(F f, S x){
+    if( f == ID ) {
+        return x;
+    } else {
+        return S{keta_to_mint[x.keta]*f, x.keta};
+    }
+}
+
+F composition(F f, F g){
+    if( f == ID ) return g;
+    else return f;
+}
+
+F id(){return ID;}
 
 void solve(){
+    int n,q; cin >> n >> q;
+    keta_to_mint10[0] = 1;
+    FOR(i,1,200001){
+        keta_to_mint10[i] = keta_to_mint10[i-1]*10;
+        keta_to_mint[i] = (keta_to_mint10[i]-1)/9;
+    }
+    // DEBUG(keta_to_mint10[2].val());
+    // DEBUG(keta_to_mint[2].val());
+
+    vector<S> vals(n); 
+    lazy_segtree<S, op, e, F, mapping, composition, id> seg(vals);
+    // cout << seg.all_prod().v.val() << endl;
+    REP(i,q){
+        int l,r,d; cin >> l >> r >> d;
+        seg.apply(l-1,r,d);
+        cout << seg.all_prod().v.val() << endl;
+    }
 }
 
 int main(){
     ios::sync_with_stdio(false);
     cin.tie(nullptr);
     solve();
-    return 0;
 }

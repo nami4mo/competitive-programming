@@ -25,7 +25,37 @@ class RollingHash():
 # rht = RollingHash(t)
 
 # th = rht.get(0,len(t))
-# for i in range(len(s)-len(t)+1):
+# for i in range(len(s)-len(t)):
 #     sh = rhs.get(i,i+len(t))
 #     if th == sh:
 #         print(i)
+
+n=int(input())
+s=input()
+tl=[input() for _ in range(n)]
+cnts=[[0]*(len(s)+1) for _ in range(len(s))]
+rhs=RollingHash(s)
+
+for t in tl:
+    rht=RollingHash(t)
+    tlen=len(t)
+    th=rht.get(0,tlen)
+    for i in range(len(s)-len(t)+1):
+        sh=rhs.get(i,i+tlen)
+        if sh==th:
+            cnts[i][i+tlen]+=1
+
+# for c in cnts:
+#     print(c)
+# dp=[[0]*(len(s)+1) for _ in range(len(s)+1)]
+# dp[0][0]=1
+MOD=10**9+7
+dp=[0]*(len(s)+1)
+dp[0]=1
+for i in range(len(s)):
+    cnts_row = cnts[i]
+    for j in range(len(s)+1):
+        dp[j]+=dp[i]*cnts_row[j]
+        dp[j]%=MOD
+
+print(dp[-1])

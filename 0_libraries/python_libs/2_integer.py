@@ -143,3 +143,49 @@ def pow_k(x, n):
         x *= x
         n //= 2
     return K * x
+
+
+def multi_mat(x,y):
+    res = [[0,0],[0,0]]
+    res[0][0] = x[0][0]*y[0][0]+x[0][1]*y[1][0]
+    res[0][1] = x[0][0]*y[0][1]+x[0][1]*y[1][1]
+    res[1][0] = x[1][0]*y[0][0]+x[1][1]*y[1][0]
+    res[1][1] = x[1][0]*y[0][1]+x[1][1]*y[1][1]
+    return res
+
+def pow_mat(x,n): 
+    res = [[1,0],[0,1]]
+    if n == 0: return res
+    xk = x
+    while n > 1:
+        if n%2 != 0:
+            res = multi_mat(res, xk)
+        xk = multi_mat(xk,xk)
+        n >>= 1
+    return multi_mat(res, xk) 
+
+a = [[2,3],[-2,4]]
+print(pow_mat(a,10))     
+
+
+def multi_mat(x,y,mod):
+    res = [[0,0],[0,0]]
+    res[0][0] = x[0][0]*y[0][0]+x[0][1]*y[1][0]
+    res[0][1] = x[0][0]*y[0][1]+x[0][1]*y[1][1]
+    res[1][0] = x[1][0]*y[0][0]+x[1][1]*y[1][0]
+    res[1][1] = x[1][0]*y[0][1]+x[1][1]*y[1][1]
+    for i in range(2):
+        for j in range(2):
+            res[i][j]%=mod
+    return res
+
+def pow_mat(x,n,mod): 
+    res = [[1,0],[0,1]]
+    if n == 0: return res
+    xk = x
+    while n > 1:
+        if n%2 != 0:
+            res = multi_mat(res,xk,mod)
+        xk = multi_mat(xk,xk,mod)
+        n >>= 1
+    return multi_mat(res,xk,mod) 
