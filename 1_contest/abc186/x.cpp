@@ -31,19 +31,16 @@ namespace defines{
             cerr << '\n';
         }
     }
-    template<typename A, size_t N, typename T> void Fill(A (&array)[N], const T &val){std::fill( (T*)array, (T*)(array+N), val );}
 }
 using namespace defines;
 
 const int IINF = 1'001'001'001;
 const ll INF = 1'001'001'001'001'001'001ll;
 const int MOD = 1'000'000'007;
-// const int MOD = 998244353;
-// using mint = modint1000000007;
-// using mint = modint998244353;
 
 
 void solve(){
+
 }
 
 int main(){

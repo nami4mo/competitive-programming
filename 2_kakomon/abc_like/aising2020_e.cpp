@@ -42,13 +42,74 @@ const int MOD = 1'000'000'007;
 // using mint = modint1000000007;
 // using mint = modint998244353;
 
+// struct Camel{
+//     ll k;
+//     ll l;
+//     ll r;
+//     Camel(ll k, ll r, ll l):k{k},l{l},r{r}{}
+// };
 
 void solve(){
+    ll n; cin >> n;
+    vector<vector<ll>> lefts(n+1);
+    vector<vector<ll>> rights(n+1);
+    ll ans = 0;
+    ll left_start = -1;
+    REP(i,n){
+        ll k,l,r; cin >> k >> l >> r;
+        k-=1;
+        if(l>=r){
+            lefts[k].push_back(l-r);
+            left_start++;
+        }
+        else{
+            rights[k].push_back(r-l);
+        }
+        ans += min(l,r);
+    }
+
+    // DEBUGLL(lefts);
+    // DEBUGLL(rights);
+
+    priority_queue<ll> ql;
+    for(int i = n-1 ; i > left_start ; i--){
+        for(ll val : lefts[i]){
+            ql.push(val);
+        }
+    }
+    for(int i = left_start ; i >= 0 ; i--){
+        for(ll val : lefts[i]){
+            ql.push(val);
+        }
+        if(!ql.empty()){
+            ans+=ql.top();
+            ql.pop();
+        }
+    }
+
+    priority_queue<ll> qr;
+    for(int i = 1; i <= left_start ; i++){
+        for(ll val : rights[i-1]){
+            qr.push(val);
+        }
+    }
+    for(int i = left_start+1 ; i < n ; i++){
+        for(ll val : rights[i-1]){
+            qr.push(val);
+        }
+        if(!qr.empty()){
+            ans+=qr.top();
+            qr.pop();
+        }
+    }
+    cout << ans << endl;
+
 }
 
 int main(){
     ios::sync_with_stdio(false);
     cin.tie(nullptr);
-    solve();
+    int t; cin>>t;
+    REP(i,t)solve();
     return 0;
 }
