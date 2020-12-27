@@ -9,7 +9,7 @@ typedef pair<ll,ll> P;
 #define FORD(i,a,b) for(ll i = a ; i > b ; i--) // for i in range(a,b,-1)
 #define ALL(x) x.begin(),x.end()
 
-#define DEBUG(x) cerr << #x << ": " << x << '\n'
+// #define DEBUG(x) cerr << #x << ": " << x << '\n'
 #define DEBUGP(x) cerr << #x << ": (" << x.first << ", " << x.second << ")" << '\n' 
 #define DEBUGL(xl) dbgl_f(#xl,xl)
 #define DEBUGLP(xl) dbglp_f(#xl,xl)
