@@ -22,7 +22,6 @@ private:
     vector<Node> nodes_;
     vector<Node> dfs_res_;
     vector<ll> dists_;
-    function<>
     
 public:
     Tree(int n): n_(n), edges_(n), dists_(n,-1), nodes_(n){}
