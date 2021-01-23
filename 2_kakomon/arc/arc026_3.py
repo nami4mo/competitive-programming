@@ -28,12 +28,12 @@ class SegTree:
             if l&1 == 0:
                 v_l = self.seg_f(v_l, self.tree[l])
             if r&1 == 0:
-                # v_r = self.seg_f(v_r, self.tree[r-1]) ## seg_f(a,b) != seg_f(b,a)
-                v_r = self.seg_f(self.tree[r-1], v_r)
+                v_r = self.seg_f(v_r, self.tree[r-1])
                 r -= 1
             l >>= 1
             r >>= 1
         return self.seg_f(v_l ,v_r)
+
 
 '''
 memo:
@@ -57,3 +57,23 @@ print(st.query(2,5))
 st.update(0,-10)
 print(st.query(0,5))
 '''
+
+n,L=map(int, input().split())
+dp=[10**18]*(L+3)
+dp[0]=0
+dp=SegTree(dp,min,10**18)
+cl=[0]*(L+3)
+
+lights=[]
+for _ in range(n):
+    l,r,c=map(int, input().split())
+    lights.append((l,r,c))
+
+lights.sort(key=lambda x: x[1])
+for l,r,c in lights:
+    c_min=dp.query(l,r)
+    curr=dp.query(r,r+1)
+    dp.update(r,min(c_min+c,curr))
+    cl[r]=min(c_min+c,curr)
+
+print(dp.query(L,L+1))

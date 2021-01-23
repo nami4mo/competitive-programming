@@ -38,9 +38,53 @@ const int MOD = 1'000'000'007;
 // const int MOD = 998244353;
 // using mint = modint1000000007;
 // using mint = modint998244353;
-
+using S = long long;
+using F = long long;
+S op(S a, S b){ return std::min(a, b); }
+S e(){ return INF; }
+S mapping(F f, S x){ return f+x; }
+F composition(F f, F g){ return f+g; }
+F id(){ return 0; }
 
 void solve(){
+    ll n,m; cin >> n >> m;
+    vector<ll> al(n); REP(i,n) cin >> al[i];
+    vector<ll> vl(m+3,0);
+    lazy_segtree<S, op, e, F, mapping, composition, id> seg(vl);
+    ll cnt=0;
+    REP(i,n-1){
+        int a1=al[i];
+        int a2=al[i+1];
+        a1-=1;a2-=1;
+        // DEBUG(a1);
+        // DEBUG(a2);
+        if(a1==a2-1) {
+            cnt+=1;
+            continue;
+        }
+        if(a1<a2){
+            seg.apply(a1+2,a2+1,1);
+            seg.apply(a2+1,a2+2,a1-a2+1);
+            cnt+=(a2-a1);
+        }
+        else{
+            seg.apply(a1+2,m+2,1);
+            int start=m-a1-1;
+            seg.apply(0,start);
+            seg.apply(1,a2+1,1);
+            seg.apply(a2+1,a2+2,(start+a2)*(-1));
+            cnt+=(m-a1-1);
+            cnt+=(a2+1);
+        }
+    }
+    ll c_max=0;
+    ll val=0;
+    REP(i,m){
+        ll ud=seg.prod(i,i+1);
+        val+=ud;
+        c_max=max(c_max,val);
+    }
+    cout<<cnt-c_max<<endl;
 }
 
 int main(){

@@ -34,13 +34,44 @@ using namespace defines;
 
 const int IINF = 1'001'001'001;
 const ll INF = 1'001'001'001'001'001'001ll;
-const int MOD = 1'000'000'007;
-// const int MOD = 998244353;
+// const int MOD = 1'000'000'007;
+const int MOD = 998244353;
 // using mint = modint1000000007;
-// using mint = modint998244353;
+using mint = modint998244353;
 
-
+const ll mi=332748118;
 void solve(){
+    int h,w,k; cin>>h>>w>>k;
+    vector<vector<char>> sl(h,vector<char>(w,'.'));
+    REP(i,k){
+        int a,b; 
+        char c;
+        cin>>a>>b>>c;
+        sl[a-1][b-1]=c;
+    }
+    mint first = mint(3).pow(h*w-k);
+    vector<vector<ll>> dp(h,vector<ll>(w,0));
+    dp[0][0] = first.val();
+    REP(i,h){
+        REP(j,w){
+            char c = sl[i][j];
+            // DEBUG(c);
+            if(i+1<h){
+                if(c=='.') dp[i+1][j]+=dp[i][j]*332748118*2;
+                if(c=='D') dp[i+1][j]+=dp[i][j];
+                if(c=='X') dp[i+1][j]+=dp[i][j];
+                dp[i+1][j]%=MOD;
+            }
+            if(j+1<w){
+                if(c=='.') dp[i][j+1]+=dp[i][j]*332748118*2;
+                if(c=='R') dp[i][j+1]+=dp[i][j];
+                if(c=='X') dp[i][j+1]+=dp[i][j];  
+                dp[i][j+1]%=MOD;
+            }
+        }
+    }
+    // DEBUG(dp[0][0].val());
+    cout<<dp[h-1][w-1]<<endl;
 }
 
 int main(){

@@ -72,5 +72,6 @@ for _ in range(Q):
     if moved_a != moved_b: dist += 2
     ans = dist+1
     ansl.append(ans)
+    # lca = db[0][moved_b]
 
 for a in ansl: print(a)

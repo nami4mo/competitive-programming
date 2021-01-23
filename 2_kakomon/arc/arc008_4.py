@@ -28,32 +28,49 @@ class SegTree:
             if l&1 == 0:
                 v_l = self.seg_f(v_l, self.tree[l])
             if r&1 == 0:
-                # v_r = self.seg_f(v_r, self.tree[r-1]) ## seg_f(a,b) != seg_f(b,a)
+                # v_r = self.seg_f(v_r, self.tree[r-1])
                 v_r = self.seg_f(self.tree[r-1], v_r)
                 r -= 1
             l >>= 1
             r >>= 1
         return self.seg_f(v_l ,v_r)
 
-'''
-memo:
-GCD... INFをide_eleに設定して、片方がINFの場合はもう片方を返す
-def gcd2(a,b):
-    if a >= INF: return b
-    elif b >= INF: return a
-    else return gcd(a,b)
 
+def merge(a,b):
+    return (a[0]*b[0], b[0]*a[1]+b[1])
 
-vl = [1,4,6,8,9]
+n,m=map(int, input().split())
+pl=set()
+pabl=[]
+for i in range(m):
+    p,a,b=map(str, input().split())
+    p=int(p)
+    a,b=float(a),float(b)
+    p-=1
+    pl.add(p)
+    pabl.append((p,a,b))
 
-def add(a,b): return a+b
-st = SegTree(vl,add,0)
-st = SegTree(vl,(lambda a,b: a+b),0)
-st = SegTree(vl,min,10**10)
+pl=list(pl)
+pl.sort()
+p2i={}
+for i,p in enumerate(pl):
+    p2i[p]=i
 
-print(st.query(2,4))
-st.update(4,-4)
-print(st.query(2,5))
-st.update(0,-10)
-print(st.query(0,5))
-'''
+vl=[(1.0,0.0) for _ in range(len(pl))]
+st = SegTree(vl,merge,(1.0,0.0))
+# print(p2i)
+# print(pl)
+
+ansmax=1
+ansmin=1
+for p,a,b in pabl:
+    st.update(p2i[p],(a,b))
+    ai,bi=st.query(0,len(pl))
+    # print((ai,bi))
+    val=ai+bi
+    ansmax=max(ansmax,val)
+    ansmin=min(ansmin,val)
+# print('{:.08f}'.format(ansmin))
+# print('{:.08f}'.format(ansmax))
+print(ansmin)
+print(ansmax)

@@ -32,15 +32,47 @@ namespace defines{
 }
 using namespace defines;
 
-const int IINF = 1'001'001'001;
-const ll INF = 1'001'001'001'001'001'001ll;
-const int MOD = 1'000'000'007;
-// const int MOD = 998244353;
-// using mint = modint1000000007;
-// using mint = modint998244353;
-
-
 void solve(){
+    int h,w; cin>>h>>w;
+    set<P> st;
+    multiset<int> mst;
+    st.insert({0,(-1)*1e6});
+    st.insert({w+3, w+3});
+    mst.insert(1e6);
+
+    REP(i,w) st.insert({i+1,i+1}); // index, start
+    REP(i,w) mst.insert(0);
+
+    REP(i,h){
+        ll a,b; cin>>a>>b;
+        auto it = st.lower_bound({a,0});
+        int last_start = (--it)->second;
+        it++;
+        while(it!=st.end()){
+            if(it->first > b) break;
+            int ind=it->first;
+            int start=it->second;
+            last_start=start;
+            int dist=ind-start;
+            mst.erase(mst.find(dist));
+            it=st.erase(it);
+        }
+
+        auto it2 = st.lower_bound({b+1,0});
+        if(it2->first!=b+1 && b+1<=w){
+            st.insert({b+1,last_start});
+            mst.insert(b+1-last_start);
+        }
+
+        if(mst.empty()){
+            cout<<-1<<endl;
+        }else{
+            int ans=*mst.begin()+(i+1);
+            if(ans>=1e6-1) ans=-1;
+            cout<<ans<<endl;
+        }
+
+    }
 }
 
 int main(){

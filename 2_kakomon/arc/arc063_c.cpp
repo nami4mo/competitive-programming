@@ -32,15 +32,108 @@ namespace defines{
 }
 using namespace defines;
 
-const int IINF = 1'001'001'001;
-const ll INF = 1'001'001'001'001'001'001ll;
-const int MOD = 1'000'000'007;
-// const int MOD = 998244353;
-// using mint = modint1000000007;
-// using mint = modint998244353;
+const ll INF = 1'001'001'001'001ll;
 
+struct LR{
+    ll l,r;
+    LR(int l, int r):l(l),r(r){}
+    LR():l(INF*(-1)),r(INF*(-1)){}
+};
+
+
+const int nmax=100010;
+vector<LR> nums(nmax,LR());
+vector<vector<int>> gl(nmax,vector<int>());
+bool ok_flag=true;
+
+
+LR dfs(int node, int pare){
+    // DEBUG(node);
+    bool free=true;
+    ll l=INF*(-1);
+    ll r=INF;
+    bool odd=false;
+    bool even=false;
+    for(int neib : gl[node]){
+        if(neib==pare) continue;
+        LR neib_lr=dfs(neib,node);
+        // DEBUG(neib);
+        // DEBUG(neib_lr.r);
+
+        if(neib_lr.r==INF*(-1)) continue;
+
+        if(neib_lr.l%2==0) even=true;
+        if(neib_lr.l%2==1) odd=true;
+
+        l=max(neib_lr.l-1,l);
+        r=min(neib_lr.r+1,r);
+        free=false;
+    }
+    if(free&&nums[node].r==INF*(-1)){
+        return LR();
+    }
+
+    if(l>r) {
+        ok_flag=false;
+    }
+    if(even&&odd) {
+        ok_flag=false;
+    }
+    if(nums[node].r!=INF*(-1)){
+        if(nums[node].l<l || r<nums[node].r) {
+            ok_flag=false;
+        }
+        if(nums[node].l%2!=l%2 && !free) {
+            ok_flag=false;
+        }
+        return nums[node];
+    }
+    else{
+        return nums[node]=LR(l,r);
+    }
+}
 
 void solve(){
+    ll n; cin >> n;
+    REP(i,n-1){
+        ll a,b; cin >> a >> b;
+        a-=1;b-=1;
+        gl[a].push_back(b);
+        gl[b].push_back(a);
+    }
+    ll k; cin >> k;
+    REP(i,k){
+        ll v,p; cin >> v >> p;
+        v-=1;
+        nums[v]=LR(p,p);
+    }
+    dfs(0,-1);
+    if(!ok_flag){
+        cout<<"No"<<endl;
+        return;
+    }
+    // REP(i,n){
+    //     auto&[l,r]=nums[i];
+    //     DEBUG(i);
+    //     DEBUG(l);
+    //     DEBUG(r);
+    // }
+    vector<ll> ansl(n,INF);
+    deque<ll> q;
+    q.push_back(0);
+    ansl[0]=nums[0].l;
+    while(!q.empty()){
+        ll poped=q.front(); q.pop_front();
+        for(int neib:gl[poped]){
+            if(ansl[neib]!=INF)continue;
+            ll ans=ansl[poped]-1;
+            if(ans<nums[neib].l) ans=ansl[poped]+1;
+            ansl[neib]=ans;
+            q.push_back(neib);
+        }
+    }
+    cout<<"Yes"<<endl;
+    for(ll a:ansl)cout<<a<<endl;
 }
 
 int main(){

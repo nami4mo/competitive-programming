@@ -39,7 +39,7 @@ void cumsum(){
     REP(i,n){
         cumsum[i+1] = cumsum[i] + al[i];
     }
-    DEBUGL(cumsum);
+    DEBUG(cumsum);
 }
 
 void cumsum2(){
@@ -53,7 +53,7 @@ void cumsum2(){
             cumsum[i+1][j+1] = cumsum[i+1][j] + cumsum[i][j+1] - cumsum[i][j] + al[i][j];
         }
     }
-    DEBUGLL(cumsum);
+    DEBUG(cumsum);
 }
 
 
