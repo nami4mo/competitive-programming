@@ -106,3 +106,19 @@ def print_overwrite(list2d, val_width=5, sleep_sec=1.0, header=None):
     val_str += f'\033[{new_line_cnt}A'
     print(val_str, end='')
     sleep(sleep_sec)
+
+
+
+class P:
+    def __init__(self,x,y):
+        self.x=x
+        self.y=y
+
+def cross(a,b,c,d): # cross? AB CD
+    s = (a.x - b.x) * (c.y - a.y) - (a.y - b.y) * (c.x - a.x)
+    t = (a.x - b.x) * (d.y - a.y) - (a.y - b.y) * (d.x - a.x)
+    if s*t>0: return False
+    s = (c.x - d.x) * (a.y - c.y) - (c.y - d.y) * (a.x - c.x)
+    t = (c.x - d.x) * (b.y - c.y) - (c.y - d.y) * (b.x - c.x)
+    if s*t>0: return False
+    return True
