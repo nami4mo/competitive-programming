@@ -19,3 +19,10 @@ long long com(int n, int k){
     if (n < 0 || k < 0) return 0;
     return fac[n] * (finv[k] * finv[n - k] % MOD) % MOD;
 }
+
+// not validated
+ll perm(int n, int r){
+    if(n<r) return 1;
+    if(n<0 || r<0) return 1;
+    return fac[n] * (finv[n-r] % MOD) % MOD; 
+}
