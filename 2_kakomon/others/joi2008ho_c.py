@@ -1,29 +1,17 @@
-# https://atcoder.jp/contests/joi2008ho/tasks/joi2008ho_c
+n,m=map(int, input().split())
+al=[int(input()) for _ in range(n)]+[0]
+pl=[]
+for a in al:
+    for a2 in al:
+        pl.append(a+a2)
 
-import bisect
-
-n, m = map(int, input().split()) 
-al = []
-for _ in range(n):
-    al.append(int(input()))
-
-two_sums = []
-for i in range(n):
-    for j in range(n):
-        two_sums.append(al[i] + al[j])
-
-two_sums = list(set(two_sums))
-two_sums.sort()
-
-res = 0
-for ts in two_sums:
-    max_two = m - ts
-    insert_index = bisect.bisect_left(two_sums, max_two)
-    if insert_index == 0:
-        if ts == m:
-            res = m
-            break
-    else:
-        res = max(res, ts+two_sums[insert_index-1])
-
-print(res)
+pl.sort()
+ans=0
+from bisect import bisect_left, bisect_right
+for p in pl:
+    if p>m:break
+    ind = bisect_right(pl, m-p) - 1
+    if ind<0:break
+    v=pl[ind]
+    ans=max(ans,v+p)
+print(ans)

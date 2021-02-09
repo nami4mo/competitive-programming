@@ -169,18 +169,21 @@ print(pow_mat(a,10))
 
 
 def multi_mat(x,y,mod):
-    res = [[0,0],[0,0]]
-    res[0][0] = x[0][0]*y[0][0]+x[0][1]*y[1][0]
-    res[0][1] = x[0][0]*y[0][1]+x[0][1]*y[1][1]
-    res[1][0] = x[1][0]*y[0][0]+x[1][1]*y[1][0]
-    res[1][1] = x[1][0]*y[0][1]+x[1][1]*y[1][1]
-    for i in range(2):
-        for j in range(2):
+    row=len(x)
+    mid=len(y) # len(x[0])
+    col=len(y[0])
+    res=[[0]*col for _ in range(row)]
+    for i in range(row):
+        for j in range(col):
+            for k in range(mid):
+                res[i][j]+=x[i][k]*y[k][j]
             res[i][j]%=mod
     return res
 
 def pow_mat(x,n,mod): 
-    res = [[1,0],[0,1]]
+    size=len(x)
+    res=[[0]*size for _ in range(size)]
+    for i in range(size): res[i][i]=1
     if n == 0: return res
     xk = x
     while n > 1:

@@ -116,3 +116,19 @@ def modinv(a,m):
 # (e.g.) 13/5 (mod MOD)
 a = modinv(5,MOD)
 ans = (13*a)%MOD
+
+
+'''
+    合同方程式
+    find minimum x(>=0)
+    such that [a*x = b (mod m)]
+'''
+# https://drken1215.hatenablog.com/entry/2020/12/20/015100
+from math import gcd
+def calc(a,b,m):
+    gcd_am=gcd(a,m)
+    if gcd_am!=1:
+        if b%gcd_am!=0: return -1 # no answer
+        a,b,m = a//gcd_am,b//gcd_am,m//gcd_am
+    x=(b*modinv(a,m))%m
+    return x

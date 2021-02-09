@@ -1,5 +1,6 @@
 '''
 https://atcoder.jp/contests/arc100/tasks/arc100_c
+https://ikatakos.com/pot/programming_algorithm/dynamic_programming/subset_convolution
 '''
 
 n=int(input())
@@ -17,6 +18,9 @@ for j in range(n):
             '''
             dp[i] += dp[i^bit]
             merge dp[i^bit] into dp[i]
+
+            ## pattern 2
+            # dp[i] += dp[i | bit]
             '''
             a,b=dp[i]
             c,d=dp[i^bit]
