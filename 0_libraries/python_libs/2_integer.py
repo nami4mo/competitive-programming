@@ -1,14 +1,9 @@
-'''
-    [LCM]
-'''
+'''　[LCM]　'''
 from math import gcd
 def lcm(x,y): return (x * y) // gcd(x, y)
 
 
-
-'''
-    [約数列挙]
-'''
+'''　[約数列挙]　'''
 n = 36
 divs = []
 for i in range(1, int(n**0.5)+1):
@@ -17,10 +12,7 @@ for i in range(1, int(n**0.5)+1):
         if i*i != n: divs.append(n//i)
 
 
-'''
-    [素数列挙] (N < 10^7)
-'''
-# https://python.ms/eratosthenes/#_2-%E9%AB%98%E9%80%9F%E7%89%88
+'''　[素数列挙（エラトステネスの篩）] (N < 10^7)　'''
 def primes(n):
     is_prime = [True] * (n + 1)
     is_prime[0] = False
@@ -33,9 +25,7 @@ def primes(n):
     return [i for i in range(n + 1) if is_prime[i]]
 
 
-'''
-    [素因数分解]
-'''
+''' [素因数分解（dict）] '''
 ## (e.g) 60 -> {2:2, 3:1, 5:1}   1 -> {}
 ## NOTE: p_factorization... O(√N),  GCD... O(logN)
 ## GCDを求めるだけなら、素因数分解するより math.gcd の方が圧倒的に高速
@@ -54,7 +44,7 @@ def p_factorization(n):
     if temp != 1: pf_cnt[temp] = 1
     return pf_cnt
 
-
+''' [素因数分解（tuple）] '''
 ## 60 -> [(2,2), (3,1), (5,1)]  (list of tuples)
 def p_factorization_t(n):
     if n == 1: return []
@@ -71,8 +61,7 @@ def p_factorization_t(n):
     if temp != 1: pf_cnt.append((temp,1))
     return pf_cnt
 
-
-## osa_k
+''' [素因数分解（osa_k法）] '''
 ## [3,4,6] -> [ {3:1}, {2:2}, {2:1, 3:1} ]  (list of)
 ## O( NloglogN + |V|logN )... 前処理 NloglogN（エラトステネスの篩）, 各値に対して logN
 def p_factorization_osa_k(vl):
@@ -96,9 +85,7 @@ def p_factorization_osa_k(vl):
 
 
 
-'''
-    [不定方程式] ax + by = 1
-'''
+''' [不定方程式] ax + by = 1 '''
 from math import gcd
 def ext_gcd(a, b, x, y):
     if b == 0:
@@ -119,11 +106,9 @@ else: pass # no ans
 
 
 
-'''
-    [x^n]
-'''
+''' [繰り返し2乗法] '''
 ## NOTE: pow(x,n) か pow(x,n,MOD) で十分高速
-MOD = 10**9 + 7
+MOD = 10**9+7
 def pow_k(x, n):
     if n == 0: return 1
     K = 1
@@ -135,39 +120,7 @@ def pow_k(x, n):
     return K * x
 
 
-def pow_k(x, n):
-    if n == 0: return 1
-    K = 1
-    while n > 1:
-        if n%2 != 0: K *= x
-        x *= x
-        n //= 2
-    return K * x
-
-
-def multi_mat(x,y):
-    res = [[0,0],[0,0]]
-    res[0][0] = x[0][0]*y[0][0]+x[0][1]*y[1][0]
-    res[0][1] = x[0][0]*y[0][1]+x[0][1]*y[1][1]
-    res[1][0] = x[1][0]*y[0][0]+x[1][1]*y[1][0]
-    res[1][1] = x[1][0]*y[0][1]+x[1][1]*y[1][1]
-    return res
-
-def pow_mat(x,n): 
-    res = [[1,0],[0,1]]
-    if n == 0: return res
-    xk = x
-    while n > 1:
-        if n%2 != 0:
-            res = multi_mat(res, xk)
-        xk = multi_mat(xk,xk)
-        n >>= 1
-    return multi_mat(res, xk) 
-
-a = [[2,3],[-2,4]]
-print(pow_mat(a,10))     
-
-
+''' 行列累乗 '''
 def multi_mat(x,y,mod):
     row=len(x)
     mid=len(y) # len(x[0])
