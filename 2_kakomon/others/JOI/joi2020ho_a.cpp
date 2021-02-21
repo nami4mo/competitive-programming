@@ -40,6 +40,30 @@ const int MOD = 1'000'000'007;
 
 
 void solve(){
+    int n;cin>>n;
+    vector<P> al(n+1);
+    REP(i,n+1){
+        ll a;cin>>a;
+        al[i]={a,i};
+    }
+    sort(ALL(al));
+    vector<ll> bl(n); REP(i,n) cin >> bl[i];
+    sort(ALL(bl));
+    multiset<ll> st;
+    REP(i,n){
+        st.insert(max(al[i+1].first-bl[i],0ll));
+    }
+    vector<ll> ansl(n+1,0ll);
+    ansl[al[0].second]=*st.rbegin();
+    FOR(i,1,n+1){
+        ll poped=max(al[i].first-bl[i-1],0ll);
+        ll inserted=max(al[i-1].first-bl[i-1],0ll);
+        st.erase(st.find(poped));
+        st.insert(inserted);
+        ansl[al[i].second]=*st.rbegin();
+    }
+    for(ll a:ansl)cout<<a<<" ";
+    cout<<endl;
 }
 
 int main(){

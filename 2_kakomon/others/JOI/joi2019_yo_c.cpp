@@ -40,6 +40,24 @@ const int MOD = 1'000'000'007;
 
 
 void solve(){
+    int n;cin>>n;
+    string s; cin>>s;
+    char prev='.';
+    int ans=0;
+    for(char c:s){
+        if(prev=='O'&&c=='X'){
+            ans++;
+            prev='.';
+        }
+        else if(prev=='X'&&c=='O'){
+            ans++;
+            prev='.';
+        }
+        else{
+            prev=c;
+        }
+    }
+    cout<<ans<<endl;
 }
 
 int main(){

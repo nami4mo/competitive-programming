@@ -40,6 +40,27 @@ const int MOD = 1'000'000'007;
 
 
 void solve(){
+    ll h,w;cin>>h>>w;
+    vector<string> sl(h); REP(i,h) cin>>sl[i];
+    vector<vector<ll>> ocnt(h,vector<ll>(w,0));
+    vector<vector<ll>> icnt(h,vector<ll>(w,0));
+    REP(i,h){
+        ll cnt=0;
+        FORD(j,w-1,-1){
+            if(sl[i][j]=='O') cnt++;
+            if(sl[i][j]=='J') ocnt[i][j]=cnt;
+        }
+    } 
+    REP(j,w){
+        ll cnt=0;
+        FORD(i,h-1,-1){
+            if(sl[i][j]=='I') cnt++;
+            if(sl[i][j]=='J') icnt[i][j]=cnt;
+        }
+    }
+    ll ans=0;
+    REP(i,h) REP(j,w) ans+=ocnt[i][j]*icnt[i][j];
+    cout<<ans<<endl;
 }
 
 int main(){

@@ -40,6 +40,24 @@ const int MOD = 1'000'000'007;
 
 
 void solve(){
+    int n;cin>>n;
+    vector<ll> xl(n); 
+    vector<bool> used(2021,false);
+    REP(i,n) {
+        cin >> xl[i];
+        used[xl[i]]=true;
+    }
+    int m; cin>>m;
+    REP(i,m){
+        int a; cin>>a;
+        a--;
+        int pos=xl[a];
+        if(pos==2019||used[pos+1]) continue;
+        used[pos]=false;
+        used[pos+1]=true;
+        xl[a]++;
+    }
+    for(ll x:xl)cout<<x<<endl;
 }
 
 int main(){

@@ -38,8 +38,41 @@ const int MOD = 1'000'000'007;
 // using mint = modint1000000007;
 // using mint = modint998244353;
 
-
+int N=10;
+// ll dp[10][10][10];
 void solve(){
+    ll n,x; cin >> n >> x;
+    vector<ll> al(n); REP(i,n) cin >> al[i];
+    // ll dp[101][101][101];
+    // ll dp[10][10][10];
+    ll ans=INF;
+    FOR(k,1,n+1){
+        ll need_rem=x%k;
+        vector< vector< vector<ll>> > dp(102, vector<vector<ll>>(102, vector<ll>(102,-1)) );
+        // vector< vector< vector<ll>> > dp(10, vector<vector<ll>>(10, vector<ll>(10,-1)) );
+        // Fill(dp,0ll);
+        dp[0][0][0]=0;
+        REP(i,n){
+            ll a=al[i];
+            REP(j,k+1){
+                REP(r,k){
+                    // tukau
+                    if(dp[i][j][r]==-1)continue;
+                    dp[i+1][j][r]=max(dp[i+1][j][r], dp[i][j][r]);
+                    dp[i+1][j+1][(r+a)%k]=max(dp[i+1][j+1][(r+a)%k], dp[i][j][r]+a);
+                }
+            }
+        }
+        ll dmax=dp[n][k][need_rem];
+        if(dmax==-1)continue;
+        ll cnt=(x-dmax)/k;
+        ans=min(ans,cnt);
+        // DEBUG(k);
+        // REP(i,10){
+        //     DEBUG(dp[i]);
+        // }
+    }
+    cout<<ans<<endl;
 }
 
 int main(){
