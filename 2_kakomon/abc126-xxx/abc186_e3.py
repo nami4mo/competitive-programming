@@ -11,8 +11,8 @@ def modinv(a,m):
     return u
 
 '''
-    find minimum x(>=0)
-    such that [a*x = b (mod m)]
+    find minimum x(>=0) 
+    [a*x = b (mod m)]
 '''
 from math import gcd
 def calc(a,b,m):
