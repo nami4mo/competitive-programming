@@ -1,12 +1,7 @@
-from typing import Union
-
-
 class UnionFind():
     def __init__(self, n):
         self.n = n
         self.parents = [-1] * n
-        ## if parents[i]>=0 => parents[i] is parent of i
-        ## if parents[i]<0 => i is root and (-1)*parents[i] shows the group size.
 
     def find(self, x):
         if self.parents[x] < 0:
@@ -22,10 +17,9 @@ class UnionFind():
         if x == y:
             return
 
-        # if size[x] < size[y]: => swap (x group: larger, y group: smaller)
-        # to merge the smaller group(y) into the larger(x)
-        if self.parents[x] > self.parents[y]: 
-            x, y = y, x
+        # if self.parents[x] > self.parents[y]:
+        #     x, y = y, x
+
         self.parents[x] += self.parents[y]
         self.parents[y] = x
 
@@ -59,3 +53,52 @@ class UnionFind():
 
     def __str__(self):
         return '\n'.join('{}: {}'.format(r, self.members(r)) for r in self.roots())
+
+from heapq import heappop,heappush
+n=int(input())
+al=[]
+for _ in range(n):
+    al.append(list(map(int, input().split())))
+
+ansl=[-1]*(2*n)
+uf=UnionFind(n*2)
+q=[]
+for i in range(n):
+    for j in range(i+1):
+        if i==j:ansl[i]=al[i][i]
+        else:
+            heappush(q,(al[i][j],i,j))
+
+gl=[]
+# print(q)
+roots=list(range(0,n*2))
+node_i=n
+cmax=0
+while q:
+    a,i,j=heappop(q)
+    if uf.same(j,i):continue
+    if cmax==a:
+        node_i-=1
+    rooti=roots[uf.find(i)]
+    rootj=roots[uf.find(j)] 
+    if rooti+1!=node_i+1: gl.append((rooti+1,node_i+1))
+    if rootj+1!=node_i+1: gl.append((rootj+1,node_i+1))
+    uf.union(rooti,node_i)
+    uf.union(rootj,node_i)
+    ansl[node_i]=a
+    uf.union(j,node_i)
+    uf.union(i,node_i)
+    roots[uf.find(j)]=node_i
+    roots[uf.find(i)]=node_i
+    # roots[uf.find(rootj)]=node_i
+    # roots[uf.find(rooti)]=node_i
+    # roots[uf.find(node_i)]=node_i
+    # print('--',i,j,uf.find(i),uf.find(j),uf.find(node_i))
+    node_i+=1
+    cmax=max(cmax,a)
+
+
+print(len(gl)+1)
+print(*ansl[:node_i])
+print(len(gl)+1)
+for u,v in gl:print(u,v)
