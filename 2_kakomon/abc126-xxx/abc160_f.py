@@ -1,17 +1,16 @@
-# TLE! rewrite with C++
-import sys
-sys.setrecursionlimit(10**6)
-
-def modinv(a,m):
-    b, u, v = m, 1, 0
-    while b:
-        t = a//b
-        a -= t*b
-        a,b = b,a
-        u -= t * v
-        u,v = v,u
-    u %= m
-    return u
+from collections import deque
+def make_order_parents(n,gl,root=0):
+    order=[root]
+    parents=[-1]*n
+    q=deque([root])
+    while q:
+        poped=q.popleft()
+        for neib in gl[poped]:
+            if parents[neib]!=-1 or neib==root:continue
+            parents[neib]=poped
+            order.append(neib)
+            q.append(neib)
+    return order,parents
 
 class Combination:
     def __init__(self, n_max=10**6, mod=10**9+7):
@@ -38,65 +37,83 @@ class Combination:
     def fac(self,n):
         return self._fac[n]
 
-    def finv(self,r):
-        return self._finv[r]
+    def finv(self,n):
+        return self._finv[n]
 
 MOD = 10**9+7
-comb = Combination(10**6, MOD)
-
-
-def dfs1(pare, node, gl, dp):
-    node_v = 1
-    node_size = 1
-    sizes = []
-    for neib in gl[node]:
-        if pare==neib: continue
-        child_v, child_size = dfs1(node, neib, gl, dp)
-        node_v *= child_v
-        node_v%=MOD
-        node_size += child_size
-        sizes.append(child_size)
-    node_v *= comb.fac(node_size-1)
-    for v in sizes:
-        node_v *= comb.finv(v)
-        node_v%=MOD
-    dp[node] = (node_v, node_size)
-    return node_v, node_size
-
-
-def dfs2(pare, node, pare_v, pare_size, gl, dp, ansl):
-    node_v, node_size = dp[node]
-    node_v *= comb.perm(node_size-1+pare_size,pare_size)
-    node_v *= comb.finv(pare_size)
-    node_v *= pare_v
-    node_size += pare_size
-    ansl[node] = node_v%MOD
-
-    for neib in gl[node]:
-        if pare==neib: continue
-        child_v, child_size = dp[neib]
-        new_node_v = node_v
-        new_node_v *= modinv(comb.perm(node_size-1,child_size),MOD)
-        new_node_v *= comb.fac(child_size)
-        new_node_v *= modinv(child_v,MOD)
-        new_node_v %= MOD
-        new_node_size = node_size-child_size
-        dfs2(node, neib, new_node_v, new_node_size, gl, dp, ansl)
-
+comb = Combination(2*10**5+10, MOD)
 
 n=int(input())
 gl=[[] for _ in range(n)]
-dp = [(-1,-1)]*n
 for _ in range(n-1):
     a,b=map(int, input().split())
     a-=1
     b-=1
     gl[a].append(b)
     gl[b].append(a)
+order,pare=make_order_parents(n,gl)
 
-dfs1(-1,0,gl,dp)
-# print(dp)
-ansl = [-1]*n
-dfs2(-1,0,1,0,gl,dp,ansl)
-for a in ansl:
-    print(a)
+dp_cnt=[0]*n
+dp_pat=[1]*n
+for v in order[::-1]:
+    dp_pat[v]*=comb.fac(dp_cnt[v])
+    dp_pat[v]%=MOD
+    dp_cnt[v]+=1
+
+    cpare = pare[v]
+    if cpare==-1:continue
+    dp_cnt[cpare]+=dp_cnt[v]
+    dp_pat[cpare]*=dp_pat[v]
+    dp_pat[cpare]*=comb.finv(dp_cnt[v])
+    dp_pat[cpare]%=MOD
+
+
+q=deque([0])
+passl=[(0,1)]*n
+ansl=[-1]*n
+ansl[0]=dp_pat[0]
+
+## あえて累積を使う方法で解く
+while q:
+    poped=q.popleft()
+
+    # left/right cumsum
+    cntl,cntr=[0],[0]
+    finvl,finvr=[1],[1]
+    patl,patr=[1],[1]
+
+    cnts,pats=[],[]
+    for neib in gl[poped]:
+        if ansl[neib]!=-1:continue
+        cnts.append(dp_cnt[neib])
+        pats.append(dp_pat[neib])
+    for c in cnts:
+        cntl.append(cntl[-1]+c)
+        finvl.append(finvl[-1]*comb.finv(c)%MOD)
+    for c in cnts[::-1]:
+        cntr.append(cntr[-1]+c)
+        finvr.append(finvr[-1]*comb.finv(c)%MOD)
+    for c in pats: patl.append(patl[-1]*c%MOD)
+    for c in pats[::-1]: patr.append(patr[-1]*c%MOD)
+
+    childnum=len(gl[poped])-1
+    if poped==0:childnum+=1
+    pare_cnt,pare_pat=passl[poped]
+
+    # calc answer from "all children" and "parent"
+    ans=comb.fac(cntl[childnum]+pare_cnt)*patl[childnum]*pare_pat*finvl[childnum]*comb.finv(pare_cnt)
+    ansl[poped]=ans%MOD
+
+    # send info (from parent + the other children) to each child
+    cind=0
+    for neib in gl[poped]:
+        if ansl[neib]!=-1:continue
+        rind=childnum-cind-1
+        cnt=cntl[cind]+cntr[rind]+pare_cnt
+        pat=patl[cind]*patr[rind]*pare_pat*comb.fac(cnt)*comb.finv(pare_cnt)*finvl[cind]*finvr[rind]
+        q.append(neib)
+        passl[neib]=(cnt+1,pat%MOD)
+        cind+=1
+
+# print(ansl)
+for a in ansl:print(a)
