@@ -58,3 +58,15 @@ class UnionFind():
 
     def __str__(self):
         return '\n'.join('{}: {}'.format(r, self.members(r)) for r in self.roots())
+
+
+n,m=map(int, input().split())
+uf=UnionFind(n)
+for _ in range(m):
+    a,b=map(int, input().split())
+    a-=1
+    b-=1
+    uf.union(a,b)
+
+ans=len(uf.roots())-1
+print(ans)

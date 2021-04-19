@@ -50,16 +50,10 @@ def main():
     n = int(input())
     al = list(map(int, input().split())) 
     lcm_dic = defaultdict(int)
-    # lcm_dic = {}
-    # al_facs = []
     for a in al:
         fac = factorization(a)
-        # a_fac_dic = {}
         for f in fac:
-            # lcm_dic.setdefault(f[0],0)
             lcm_dic[f[0]] = max(f[1], lcm_dic[f[0]])
-            # a_fac_dic[f[0]] = f[1]
-        # al_facs.append(a_fac_dic)
 
 
     lcm = 1
@@ -73,19 +67,6 @@ def main():
         # if ans >= MOD: ans%=MOD
     ans%=MOD
 
-
-    # ans = 0
-    # for al_f in al_facs:
-    #     curr_val = 1
-    #     for prime, cnt in lcm_dic.items():
-    #         if prime in al_f:
-    #             curr_val *= pow_k(prime,(cnt-al_f[prime]))
-    #             curr_val%=MOD
-    #         else:
-    #             curr_val *= pow_k(prime,cnt)
-    #             curr_val%=MOD
-    #     ans += curr_val
-    #     ans %= MOD
     print(ans)
 
 

@@ -1,0 +1,11 @@
+x,y,a,b,c=map(int, input().split())
+pl=list(map(int, input().split()))
+ql=list(map(int, input().split()))
+rl=list(map(int, input().split()))
+pl.sort(reverse=True)
+ql.sort(reverse=True)
+rl.sort(reverse=True)
+ll=pl[:x]+ql[:y]+rl
+ll.sort(reverse=True)
+ans=sum(ll[:x+y])
+print(ans)

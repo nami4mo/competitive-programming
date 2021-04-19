@@ -28,6 +28,7 @@ print(now+1)
 
 # ----------------------------------
 
+# https://atcoder.jp/contests/abc179/tasks/abc179_e
 from math import log2
 n,x,m = map(int, input().split())
 
@@ -35,6 +36,7 @@ logn = int(log2(n))+1
 db = [[0]*m for _ in range(logn)]
 dbs = [[0]*m for _ in range(logn)]
 
+# a=i なら 次は (i**2)%m
 for i in range(m):
     db[0][i] = (i**2)%m
     dbs[0][i] = (i**2)%m
