@@ -1,38 +1,35 @@
-def multi_mat(x,y,mod):
-    row=len(x)
-    mid=len(y) # len(x[0])
-    col=len(y[0])
-    res=[[0]*col for _ in range(row)]
-    for i in range(row):
-        for j in range(col):
-            for k in range(mid):
-                res[i][j]+=x[i][k]*y[k][j]
-            res[i][j]%=mod
-    return res
-
-def pow_mat(x,n,mod): 
-    size=len(x)
-    res=[[0]*size for _ in range(size)]
-    for i in range(size): res[i][i]=1
-    if n == 0: return res
-    xk = x
-    while n > 1:
-        if n%2 != 0:
-            res = multi_mat(res,xk,mod)
-        xk = multi_mat(xk,xk,mod)
-        n >>= 1
-    return multi_mat(res,xk,mod) 
-
 n,b,k=map(int, input().split())
 cl=list(map(int, input().split()))
-mat=[[0]*b for _ in range(b)]
 
-for i in range(b):
-    for j in range(b):
-        for c in cl:
-            if (j*10+c)%b==i:mat[i][j]=1
+db=[[0]*b for _ in range(60)]
+for c in cl:
+    db[0][c%b]+=1
+
+p2=[10%b]
+for i in range(1,60):
+    p2.append((p2[-1]**2)%b)
 
 MOD=10**9+7
-mat=pow_mat(mat,n,MOD)
-ans=mat[0][0]
-print(ans)
+for i in range(1,60):
+    for j in range(b):
+        for k in range(b):
+            rem=(p2[i-1]*j+k)%b
+            db[i][rem]+=db[i-1][j]*db[i-1][k]
+            db[i][rem]%=MOD
+
+ansd=[0]*b
+first=True
+for i in range(0,60):
+    if n&(1<<i)==0:continue
+    if first:
+        ansd=db[i][:]
+        first=False
+        continue
+    new_ansd=[0]*b
+    for j in range(b):
+        for k in range(b):
+            rem=(p2[i]*j+k)%b
+            new_ansd[rem]+=ansd[j]*db[i][k]
+            new_ansd[rem]%=MOD
+    ansd=new_ansd[:]
+print(ansd[0])

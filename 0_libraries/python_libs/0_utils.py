@@ -99,3 +99,10 @@ def print_overwrite(list2d, val_width=5, sleep_sec=1.0, header=None):
     sleep(sleep_sec)
 
 
+''' bit 部分集合 3**n '''
+for i in range(1<<n):
+    bits=(i-1)&i
+    while bits>0:
+        bits=(bits-1)&i
+        if bits==0:break
+        comp=bits^i
