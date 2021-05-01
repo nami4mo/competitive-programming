@@ -11,6 +11,17 @@
 - たまに、余分な部分をカットする？
 */
 
+    /*  
+        T0: 初期温度（一回の遷移で動きうる最大値程度
+        T1: 最終温度（一回の遷移で動きうる最小値程度） 
+        double t01=tm.get_time()/TL; // 現在時間 0.0~1.0
+        double tt=pow(T0,1.0-t01)*pow(T1,t01); // 温度 T0~T1
+        if( rand_01(mt64) < exp(改善値/tt) ) -> 遷移する
+        else -> 遷移しない
+    */
+    // double T0=2e8;
+    // double T1=1e4;
+
 #include <bits/stdc++.h>
 #if __has_include(<atcoder/all>)
     #include <atcoder/all>

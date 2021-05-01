@@ -43,7 +43,7 @@ print(node_a, node_b)
     - 最短経路復元は、コメント部分を外す（未テスト）
 '''
 import heapq
-def dijkstra(s, n, g): # s: start, n: |V|, g; glaph 
+def dijkstra(s, n, g): # s: start, n: |V|, g; glaph (to,cost)
     INF = 10**18
     d = [INF] * n
     #-- record the prev vertex of each one for restoring the route --
