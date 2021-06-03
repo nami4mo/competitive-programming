@@ -117,3 +117,22 @@ def bellman_ford(s, n, g): # s: start, n: |V|, g; glaph
         # may do something for negatice cycle
         return None
 
+'''
+    make dfs-tour order
+'''
+from collections import deque
+def make_dfs_order(n,gl,root=0):
+    res=[]
+    vis=[False]*n
+    q=deque()
+    q.append(root)
+    vis[root]=True
+    while q:
+        poped=q.popleft()
+        res.append(poped)
+        for neib in gl[poped]:
+            if vis[neib]:continue
+            vis[neib]=True
+            q.appendleft(neib)
+    return res
+
