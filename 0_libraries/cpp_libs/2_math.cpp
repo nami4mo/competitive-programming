@@ -111,9 +111,9 @@ unordered_map<ll,ll> p_factorization_m2(ll n){
 int main(){
     cout << pow_mod(3,4,5) << endl;
     cout << lcm(4,6) << endl;
-    DEBUGL(divs(40));
-    DEBUGL(primes(50));
-    DEBUGLP(p_factorization(12));
-    DEBUGM(p_factorization_m(12));
+    // DEBUGL(divs(40));
+    // DEBUGL(primes(50));
+    // DEBUGLP(p_factorization(12));
+    // DEBUGM(p_factorization_m(12));
 }
 

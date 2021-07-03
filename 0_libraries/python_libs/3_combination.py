@@ -75,6 +75,17 @@ class Combination:
         if n < 0 or r < 0: return 0
         return self._fac[n] * (self._finv[n-r] % self._mod) % self._mod
 
+    def lucas(self, n, r): # nCr (mod self._mod(prime)) 
+        if n < r: return 0 
+        res = 1
+        while n > 0:
+            nq, rq = n//self._mod, r//self._mod
+            nr, rr = n-nq*self._mod, r-rq*self._mod
+            res *= self.com(nr, rr)
+            res %= self._mod
+            n, r = nq, rq
+        return res
+
 MOD = 10**9+7
 comb = Combination(10**6, MOD)
 comb.com(10,3)

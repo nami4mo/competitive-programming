@@ -1,35 +1,43 @@
-import heapq
-INF = 10**18
-def dijkstra(s, n, g): # s: start, n: |V|, g; glaph (to,cost)
-    d = [INF] * n
-    #-- record the prev vertex of each one for restoring the route --
-    # prev_vl = [-1]*n 
-    d[s] = 0
-    que = [] # (a,b): a... shortest dist, b... v
-    heapq.heappush(que, (0, s))
+INF=-(10**10)
+def query(n, i, al):
+    if i>n:
+        return n-i-1+INF
+    if al[i]!=INF:
+        return al[i]
+    print('?', i, flush=True)
+    res=int(input())
+    al[i]=res
+    return res
 
-    while que:
-        dist, v = heapq.heappop(que)
-        if d[v] < dist: continue # if v has been already used -> continue
-        for next_v, cost in g[v]:
-            if d[next_v] > d[v] + cost:
-                d[next_v] = d[v] + cost
-                # prev_vl[next_v] = v
-                heapq.heappush(que, (d[next_v], next_v))
-    return d
+fib=[1,1]
+for i in range(13):
+    fib.append(fib[-1]+fib[-2])
 
-n,m=map(int, input().split())
-gl=[[] for _ in range(n+m)]
+for _ in range(int(input())):
+    n=int(input())
+    if n<=15:
+        al=[INF]*(n+1)
+        ans=-10
+        for i in range(n):
+            ans=max(ans,query(n,i+1,al))
+        print('!',ans)
+        continue
 
-for i in range(m):
-    k=int(input())
-    rl=list(map(int, input().split()))
-    for r in rl:
-        gl[r-1].append((n+i,0))
-        gl[n+i].append((r-1,1))
-
-d=dijkstra(0,n+m,gl)
-for i in range(n):
-    ans=d[i]
-    if ans>=INF:ans=-1
-    print(ans)
+    N=1597
+    al=[INF]*N
+    al[0]=INF-1
+    l=0
+    r=N
+    ok=True
+    for i in range(14,0,-1):
+        l2=l+fib[i]
+        r2=r-fib[i]
+        if query(n,l2,al)<=query(n,r2,al):
+            l=l2
+        else:
+            r=r2
+    for i in range(l,r):query(n,i,al)
+    ans=INF
+    for i in range(N):
+        ans=max(ans,al[i])
+    print('!',ans)
