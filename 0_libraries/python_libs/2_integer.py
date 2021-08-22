@@ -160,7 +160,7 @@ def multi_mat(x,y,mod):
         for j in range(col):
             for k in range(mid):
                 res[i][j]+=x[i][k]*y[k][j]
-            res[i][j]%=mod
+                res[i][j]%=mod
     return res
 
 def pow_mat(x,n,mod): 

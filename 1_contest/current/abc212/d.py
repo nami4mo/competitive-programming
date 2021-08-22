@@ -1,4 +1,6 @@
 from heapq import heappush, heappop
+import sys
+# input = sys.stdin.readline
 
 csum=0
 hq=[]
