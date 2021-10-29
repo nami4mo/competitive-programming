@@ -1,5 +1,9 @@
 #include "xx_def.hpp"
 
+/* use Pair as key */
+#include <boost/functional/hash.hpp>
+unordered_map<P, vector<ll>, boost::hash<P>> mp;
+unordered_set<P, boost::hash<P>> st;
 
 const string alps = "abcdefghijklmnopqrstuvwxyz";
 const string ALPs = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";

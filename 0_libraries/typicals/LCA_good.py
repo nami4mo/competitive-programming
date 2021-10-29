@@ -45,6 +45,8 @@ def calc_lca_dist(n, db, dist_pares, a, b):
     for i in range(logn):
         if b_up&(1<<i) > 0:
             moved_b = db[i][moved_b]
+    if moved_a == moved_b:
+        return moved_a, b_up
     
     # --- search LCA ---
     dist = b_up

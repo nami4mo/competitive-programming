@@ -1,5 +1,41 @@
 #include "xx_def.hpp"
 
+vector<vector<ll>> multi_mat(vector<vector<ll>> &x, vector<vector<ll>> &y, ll mod){
+    ll row=x.size();
+    ll mid=y.size(); // x[0].size
+    ll col=y[0].size();
+    vector<vector<ll>> res(row, vector<ll>(col,0));
+    for(int i=0; i<row ; i++){
+        for(int j=0; j<col ; j++){
+            for(int k=0; k<mid ; k++){
+                res[i][j]+=x[i][k]*y[k][j];
+                res[i][j]%=mod;
+            }
+        }
+    }
+    return res;
+}
+
+vector<vector<ll>> pow_mat(vector<vector<ll>> x, ll n, ll mod){
+    ll size=x.size();
+    vector<vector<ll>> res(size, vector<ll>(size,0));
+    for(int i=0; i<size; i++){
+        res[i][i]=1;
+    }
+    if(n==0) return res;
+
+    vector<vector<ll>> xk=x;
+    while(n>1){
+        if(n%2!=0){
+            res=multi_mat(res,xk,mod);
+        }
+        xk=multi_mat(xk,xk,mod);
+        n>>=1;
+    }
+    return multi_mat(res,xk,mod);
+}
+
+
 long long pow_mod(long long x, long long n, long long mod){
     if(n == 0) { return 1; }
     ll xx = x;

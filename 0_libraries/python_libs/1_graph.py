@@ -14,8 +14,8 @@ def bfs(start, g, visited):
     return last_node
 
 n = int(input())
-gl = [ [] for _ in range(n+1)]
-visited = [-1] * (n+1)
+gl = [ [] for _ in range(n)]
+visited = [-1] * (n)
 for i in range(n-1):
     a, b = map(int, input().split()) 
     a-=1
@@ -23,8 +23,8 @@ for i in range(n-1):
     gl[a].append(b)
     gl[b].append(a)
 
-node_a = bfs(1, gl, visited)
-visited = [-1] * (n+1)
+node_a = bfs(0, gl, visited)
+visited = [-1] * (n)
 node_b = bfs(node_a,gl,visited)
 # print(visited[node_b])
 print(node_a, node_b)

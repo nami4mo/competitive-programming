@@ -1,0 +1,87 @@
+#include <bits/stdc++.h>
+#if __has_include(<atcoder/all>)
+    #include <atcoder/all>
+    using namespace atcoder;
+#endif
+using namespace std;
+namespace defines{
+    typedef long long ll;
+    typedef pair<ll,ll> P;
+    #define FOR(i,a,b) for(ll i = a ; i < b ; i++) // for i in range(a,b)
+    #define REP(i,n) for(ll i = 0 ; i < n ; i++) // for i in range(b)
+    #define FORD(i,a,b) for(ll i = a ; i > b ; i--) // for i in range(a,b,-1)
+    #define ALL(x) x.begin(),x.end()
+    template<class T> vector<T> make_vec(size_t a){return vector<T>(a);}
+    template<class T, class... Ts> auto make_vec(size_t a, Ts... ts){ return vector<decltype(make_vec<T>(ts...))>(a, make_vec<T>(ts...));}
+    template<typename A, size_t N, typename T> void Fill(A (&array)[N], const T &val){std::fill( (T*)array, (T*)(array+N), val );}
+
+    /* for debug */
+    void NEWLINE(){cerr<<'\n';}
+    void COMMA(){cerr<<", ";}
+    #define DEBUG1(x) dbg(#x,x); NEWLINE();
+    #define DEBUG2(x1,x2) dbg(#x1,x1); COMMA(); dbg(#x2,x2); NEWLINE();
+    #define DEBUG3(x1,x2,x3) dbg(#x1,x1); COMMA(); dbg(#x2,x2); COMMA(); dbg(#x3,x3); NEWLINE();
+    #define DEBUG4(x1,x2,x3,x4) dbg(#x1,x1); COMMA(); dbg(#x2,x2); COMMA(); dbg(#x3,x3); COMMA(); dbg(#x4,x4); NEWLINE();
+    #define DEBUG_OVERLOAD(x1, x2, x3, x4, x5, ...) x5
+    #define DEBUG(...) DEBUG_OVERLOAD(__VA_ARGS__, DEBUG4, DEBUG3, DEBUG2, DEBUG1)(__VA_ARGS__)
+    template<class T> void dbg(string name, T x){cerr<<name<<": "<<x<<"";}
+    template<> void dbg<P>(string name, P x){cerr<<name<<": ("<<x.first<<","<<x.second<<")";}
+    template<class T> void dbg(string name, vector<T> xl){cerr<<name<<": "; for(T x: xl) cerr<<x<<" "; cerr<<"";}
+    template<> void dbg<P>(string name, vector<P> xl){cerr<<name<<": "; for(P x:xl){cerr<<"("<<x.first<<","<<x.second<<"), ";}cerr<<"";}
+    template<class T> void dbg(string name, vector<vector<T>> xl){ cerr<<name<<": \n"; int ml=1;for(vector<T> row: xl){for(T x:row){stringstream sstm; sstm<<x; ml=max(ml,(int)sstm.str().size());}}; for(vector<T> row: xl){{for(T x:row) cerr<<std::right<<std::setw(ml+1)<<x;} cerr << '\n';}}
+    template<class T> void dbg(string name, set<T> xl){cerr<<name<<": "; for(T x:xl)cerr<<x<<" ";cerr<<'\n';}
+    template<class T> void dbg(string name, multiset<T> xl){cerr<<name<<": "; for(T x:xl)cerr<<x<<" ";cerr<<'\n';}
+    template<class T> void dbg(string name, unordered_set<T> xl){cerr<<name<<": "; for(T x:xl)cerr<<x<<" ";cerr<<'\n';}
+    template<class T> void dbg(string name, unordered_multiset<T> xl){cerr<<name<<": "; for(T x:xl)cerr<<x;cerr<<'\n';}
+    template<class T, class U> void dbg(string name, map<T,U> xl){cerr<<name<<": \n"; for(auto &[k,v]:xl)cerr<<"  "<<k<<": "<<v<<'\n';}
+    template<class T, class U> void dbg(string name, unordered_map<T,U> xl){cerr<<name<<": \n"; for(auto &[k,v]:xl)cerr<<"  "<<k<<": "<<v<<'\n';}
+}
+using namespace defines;
+
+const int IINF = 1'001'001'001;
+const ll INF = 1'001'001'001'001'001'001ll;
+const ll MOD = 998244353;
+// using mint = modint1000000007;
+using mint = modint998244353;
+
+
+void solve(){
+    string s; cin>>s;
+    int n = s.size();
+    vector<ll> v10={1};
+    vector<ll> v2={1};
+    ll v=1;
+    REP(i,n){
+        v*=10;
+        v%=MOD;
+        v10.push_back(v);
+    }
+    v=1;
+    REP(i,n){
+        v*=2;
+        v%=MOD;
+        v2.push_back(v);
+    }
+    // DEBUG(v10,v2);
+    vector<ll> cl = convolution<998244353>(v10, v2);
+    // DEBUG(cl);
+    mint ans=0;
+    REP(i,n){
+        ll val=s[i]-'0';
+        mint left=val*v2[i];
+        // left%=MOD;
+        mint cv=cl[n-i-1]+v10[n-i-1];
+        ans+=left*cv;
+        // ans%=MOD;
+        // DEBUG(ans.val());
+    }
+    ans/=2;
+    cout<<ans.val()<<endl;
+}
+
+int main(){
+    ios::sync_with_stdio(false);
+    cin.tie(nullptr);
+    solve();
+    return 0;
+}
