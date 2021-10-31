@@ -2,6 +2,18 @@
 from math import gcd
 def lcm(x,y): return (x * y) // gcd(x, y)
 
+''' [分数] '''
+class Frac:
+    def __init__(self, nume, deno):
+        self.nume = nume
+        self.deno = deno
+    def __lt__(self, rh): return self.nume * rh.deno < self.deno * rh.nume
+    def __gt__(self, rh): return self.nume * rh.deno > self.deno * rh.nume
+    def __eq__(self, rh): return self.nume * rh.deno == self.deno * rh.nume
+    def __le__(self, rh): return self.nume * rh.deno <= self.deno * rh.nume
+    def __ge__(self, rh): return self.nume * rh.deno >= self.deno * rh.nume
+    def __ne__(self, rh): return self.nume * rh.deno != self.deno * rh.nume
+    def __repr__(self): return '{}/{}'.format(self.nume, self.deno)
 
 '''　[約数列挙]　'''
 n = 36
@@ -175,3 +187,23 @@ def pow_mat(x,n,mod):
         xk = multi_mat(xk,xk,mod)
         n >>= 1
     return multi_mat(res,xk,mod) 
+
+
+'''
+sum_of_floor (from ACL)
+'''
+def sum_of_floor(n,m,a,b):
+    ans = 0
+    if a >= m:
+        ans += (n - 1) * n * (a // m) // 2
+        a %= m
+    if b >= m:
+        ans += n * (b // m)
+        b %= m
+    y_max = (a * n + b) // m
+    x_max = (y_max * m - b)
+    if y_max == 0: 
+        return ans
+    ans += (n - (x_max + a - 1) // a) * y_max
+    ans += sum_of_floor(y_max, a, m, (a - x_max % a) % a)
+    return ans

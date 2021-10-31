@@ -12,3 +12,7 @@ rand_chacha = "0.2.2"
 rand_core = "0.5.1"
 rand_hc = "0.2.0"
 rand_pcg = "0.2.1"
+
+[[bin]]
+name = "rust_template"
+path = "src/main.rs"

@@ -62,4 +62,3 @@ fn main() {
     println!("{}", cnt);
     println!("{:?}", tm.get_time());
 }
-

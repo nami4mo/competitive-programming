@@ -35,10 +35,12 @@ alps = ALPS.lower()
 
 
 ''' [3d-list] '''
+l,m,n=5,5,5
 dp = [[[0]*l for _ in range(m)] for _ in range(n)]
 
 
 ''' [1-dim cumulative sum] '''
+n=5
 al = [1, 2, 6, 3, 10]
 csums = [0]*(n+1)
 for i, a in enumerate(al):
@@ -46,6 +48,7 @@ for i, a in enumerate(al):
 
 
 ''' [2-dim cumulative sum] '''
+w,h=10,10
 al = [[1, 2, 6], [3, 10, 3], [3, 4, 1], [1, 3, 4]]
 csums = [[0]*(w+1) for _ in range(h+1)]
 for i in range(h):
@@ -55,6 +58,7 @@ for i in range(h):
 
 
 ''' [math.ceil] '''
+a,b=10,3
 v = (a-1)//b + 1
 
 

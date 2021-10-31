@@ -5,7 +5,7 @@ al = [-9,-7,-4,0,3,3,6,6,7,10]
 # al = []
 n = len(al)
 b = 6
-print(f'n : {N}')
+print(f'n : {n}')
 print(f'al: {al}')
 print(f'b : {b}')
 print()
@@ -73,24 +73,3 @@ val3 = al[ind3] if ind3 is not None else None # -> 6
 ind4 = bisect_right(al, b)
 ind4 = ind4 if 0 <= ind4 < n else None        # -> 8
 val4 = al[ind4] if ind4 is not None else None # -> 7
-
-# 5. bに最も近い要素のindex/value -> 1. と 3. を組み合わせてコネコネ
-
-
-# print('--------------------')
-
-
-# # bに最も近い要素のindex/value
-# ## 大きい側で最も近い要素
-# ind_large = bisect_right(al, b)
-# ind_large = ind_large if 0 <= ind_large < n else None
-# val_large = al[ind_large] if ind_large is not None else None
-
-# ## 小さい側で最も近い要素
-# ind_small = ind_large - 1
-# ind_small = ind_small if 0 <= ind_small < n else None
-# val_smallind_small = al[ind_small] if ind_small is not None else None
-
-# if 
-
-# print(f'max index/value ( a <= b ): {ind}/{val}')

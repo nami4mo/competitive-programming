@@ -1,7 +1,8 @@
 #!/bin/bash -eu
 set -eu
 
-input_file="${HOME}/Desktop/pro_con/code_runner_input.txt"
+sh_dir=$(cd $(dirname $0); pwd)
+input_file="${sh_dir}/code_runner_input.txt"
 
 dir=$1
 filename=$2
