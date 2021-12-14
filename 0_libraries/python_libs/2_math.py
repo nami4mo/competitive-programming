@@ -146,8 +146,6 @@ def calc(a,b,m):
     return x
     
 
-
-
 ''' [繰り返し2乗法] '''
 ## NOTE: pow(x,n) か pow(x,n,MOD) で十分高速
 MOD = 10**9+7

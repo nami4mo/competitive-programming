@@ -1,0 +1,5 @@
+    Finished release [optimized] target(s) in 0.02s
+     Running `target/release/tester in/0000.txt ../ahc003_a`
+Score = 967667252
+    Finished release [optimized] target(s) in 0.02s
+     Running `target/release/tester in/0001.txt ../ahc003_a`

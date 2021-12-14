@@ -35,6 +35,9 @@ vector<vector<ll>> pow_mat(vector<vector<ll>> x, ll n, ll mod){
     return multi_mat(res,xk,mod);
 }
 
+long long modinv(long long x, long long mod){
+    
+}
 
 long long pow_mod(long long x, long long n, long long mod){
     if(n == 0) { return 1; }

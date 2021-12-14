@@ -1,0 +1,17 @@
+    Finished release [optimized] target(s) in 0.27s
+     Running `target/release/tester in/0000.txt ../ahc003_a`
+Score = 472853635
+    Finished release [optimized] target(s) in 0.01s
+     Running `target/release/tester in/0001.txt ../ahc003_a`
+Score = 422344837
+    Finished release [optimized] target(s) in 0.01s
+     Running `target/release/tester in/0002.txt ../ahc003_a`
+Score = 387436000
+    Finished release [optimized] target(s) in 0.01s
+     Running `target/release/tester in/0003.txt ../ahc003_a`
+Score = 528590898
+    Finished release [optimized] target(s) in 0.01s
+     Running `target/release/tester in/0004.txt ../ahc003_a`
+Score = 463908393
+    Finished release [optimized] target(s) in 0.02s
+     Running `target/release/tester in/0005.txt ../ahc003_a`

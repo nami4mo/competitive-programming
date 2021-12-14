@@ -24,10 +24,6 @@ playground/
 
 *dsYM/
 
-ahc003/
-ahc004/
-asprocon7/
-genocon2021/
-rcl-contest-2021-long/
-
 target/
+
+Cargo.lock
