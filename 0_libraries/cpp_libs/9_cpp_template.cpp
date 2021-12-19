@@ -10,12 +10,20 @@ using namespace atcoder;
 #endif
 
 using namespace std;
-typedef long long ll;
-typedef pair<ll, ll> P;
+
+using ll = long long;
+using P = pair<ll, ll>;
+template <class T>
+using Vec = vector<T>;
+
 #define FOR(i, a, b) for (ll i = a; i < b; i++)   // for i in range(a,b)
 #define REP(i, n) for (ll i = 0; i < n; i++)      // for i in range(b)
 #define FORD(i, a, b) for (ll i = a; i > b; i--)  // for i in range(a,b,-1)
 #define ALL(x) x.begin(), x.end()
+#define IN(y, h) !(y < 0 || h <= y)
+#define OUT(y, h) (y < 0 || h <= y)
+
+const Vec<P> DYXS = {{-1, 0}, {1, 0}, {0, -1}, {0, 1}};
 
 const int IINF = 1'001'001'001;
 const ll INF = 1'001'001'001'001'001'001ll;
@@ -31,7 +39,7 @@ void solve() {
 int main() {
     ios::sync_with_stdio(false);
     cin.tie(nullptr);
-    DEBUG("local");
+    // DEBUG("local");
     solve();
     return 0;
 }

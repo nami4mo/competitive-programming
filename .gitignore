@@ -27,3 +27,6 @@ playground/
 target/
 
 Cargo.lock
+
+rust_memo.rs
+tmp.txt
