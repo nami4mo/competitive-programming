@@ -25,15 +25,16 @@ class SegTree:
         l += (self.leaf_n-1)
         r += (self.leaf_n-1)
         while l < r:
-            if l&1 == 0:
+            if l & 1 == 0:
                 v_l = self.seg_f(v_l, self.tree[l])
-            if r&1 == 0:
+            if r & 1 == 0:
                 # v_r = self.seg_f(v_r, self.tree[r-1]) ## seg_f(a,b) != seg_f(b,a)
                 v_r = self.seg_f(self.tree[r-1], v_r)
                 r -= 1
             l >>= 1
             r >>= 1
-        return self.seg_f(v_l ,v_r)
+        return self.seg_f(v_l, v_r)
+
 
 '''
 memo:
@@ -42,7 +43,6 @@ def gcd2(a,b):
     if a >= INF: return b
     elif b >= INF: return a
     else return gcd(a,b)
-
 
 vl = [1,4,6,8,9]
 
