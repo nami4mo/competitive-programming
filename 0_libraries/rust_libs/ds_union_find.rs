@@ -89,4 +89,5 @@ fn main() {
             println!("{}", ans);
         }
     }
+    pow
 }

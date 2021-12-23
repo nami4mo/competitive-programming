@@ -92,19 +92,40 @@ impl<T: Ord + Copy> Bisect for Vec<T> {
     }
 }
 
+// #[fastout]
 fn main() {
-    input! {
-        n: usize,
-        mut al: [i64; n],
-        mut bl: [i64; n],
-        mut cl: [i64; n],
-    }
+    // https://atcoder.jp/contests/typical90/tasks/typical90_g
+    input!(n: usize, mut al: [i64; n], q: usize);
     al.sort();
-    bl.sort();
-    cl.sort();
-    let mut ans = 0;
-    for &b in &bl {
-        ans += al.less_cnt(b) * cl.greater_cnt(b);
+    for _ in 0..q {
+        input! {b: i64}
+        let res1 = al.less_eq_nearest(b);
+        let res2 = al.greater_eq_nearest(b);
+        let mut ans = 10i64.pow(18);
+        match res1 {
+            Some(v) => ans = ans.min(num::abs(b - v.1)),
+            _ => (),
+        }
+        match res2 {
+            Some(v) => ans = ans.min(num::abs(b - v.1)),
+            _ => (),
+        }
+        println!("{}", ans);
     }
-    println!("{}", ans);
+
+    //// https://atcoder.jp/contests/abc077/tasks/arc084_a
+    // input! {
+    //     n: usize,
+    //     mut al: [i64; n],
+    //     mut bl: [i64; n],
+    //     mut cl: [i64; n],
+    // }
+    // al.sort();
+    // bl.sort();
+    // cl.sort();
+    // let mut ans = 0;
+    // for &b in &bl {
+    //     ans += al.less_cnt(b) * cl.greater_cnt(b);
+    // }
+    // println!("{}", ans);
 }

@@ -33,28 +33,27 @@ alps = ALPS.lower()
 
 
 ''' [3d-list] '''
-l,m,n=5,5,5
+l, m, n = 5, 5, 5
 dp = [[[0]*l for _ in range(m)] for _ in range(n)]
 
 
-
 ''' [2-dim cumulative sum] '''
-h,w=4,3
+h, w = 4, 3
 al = [[1, 2, 6], [3, 10, 3], [3, 4, 1], [1, 3, 4]]
 csums = [[0]*(w+1) for _ in range(h+1)]
 for i in range(h):
     for j in range(w):
-        csums[i+1][j+1] = csums[i+1][j] + csums[i][j+1] - csums[i][j] + al[i][j]
+        csums[i+1][j+1] = csums[i+1][j] + \
+            csums[i][j+1] - csums[i][j] + al[i][j]
 
 # [ (y0,x0) ~ (y1,x1) ] の合計取得（両端含む）
-y1,x1=2,1
-y0,x0=1,1
+y1, x1 = 2, 1
+y0, x0 = 1, 1
 val = csums[y1+1][x1+1] - csums[y1+1][x0] - csums[y0][x1+1] + csums[y0][x0]
 
 
-
 ''' [math.ceil] 繰り上がり '''
-a,b=10,3
+a, b = 10, 3
 v = (a-1)//b + 1
 
 
@@ -74,10 +73,13 @@ cntl.append((prev, cnt))
 
 
 ''' [線分の交差判定] '''
+
+
 class P:
     def __init__(self, x, y):
         self.x = x
         self.y = y
+
 
 def cross(a, b, c, d):  # cross? AB CD
     s = (a.x - b.x) * (c.y - a.y) - (a.y - b.y) * (c.x - a.x)
@@ -91,20 +93,20 @@ def cross(a, b, c, d):  # cross? AB CD
     return True
 
 
-
 ''' bit 部分集合 3**n '''
-## https://atcoder.jp/contests/dp/submissions/27756431
+# https://atcoder.jp/contests/dp/submissions/27756431
 n = 3
 for i in range(1 << n):
-    ## 片方が空集合になるのを認めない場合
+    # 片方が空集合になるのを認めない場合
     bits = i
-    while True:  
+    while True:
         bits = (bits-1) & i
         comp = bits ^ i
-        if bits <= i//2: break # (bits,comp), (comp,bits) の片方だけ見れたらOK（両方見ると重い）
+        if bits <= i//2:
+            break  # (bits,comp), (comp,bits) の片方だけ見れたらOK（両方見ると重い）
         # print('processing here', bits,comp)
 
-    ## 片方が空集合でもOKな場合
+    # 片方が空集合でもOKな場合
     # bits = i
     # comp = bits ^ i
     # while True:
