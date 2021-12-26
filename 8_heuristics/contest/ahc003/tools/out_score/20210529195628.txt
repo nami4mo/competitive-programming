@@ -1,2 +1,0 @@
-    Finished release [optimized] target(s) in 0.25s
-     Running `target/release/tester in/0000.txt ../ahc003_a`

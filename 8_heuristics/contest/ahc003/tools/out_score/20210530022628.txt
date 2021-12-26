@@ -1,8 +1,0 @@
-    Finished release [optimized] target(s) in 0.01s
-     Running `target/release/tester in/0000.txt ../ahc003_a`
-Score = 968320168
-    Finished release [optimized] target(s) in 0.02s
-     Running `target/release/tester in/0001.txt ../ahc003_a`
-Score = 936726508
-    Finished release [optimized] target(s) in 0.01s
-     Running `target/release/tester in/0002.txt ../ahc003_a`

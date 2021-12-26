@@ -1,3 +1,10 @@
+# Warning!
+This repository is deprecated.
+Please check the following repositories:
+- [Library](https://github.com/nami4mo/competitive-programming-library)
+- [Solutions](https://github.com/nami4mo/competitive-programming-problems)
+
+
 # competive-programming
 My competive programming life started from 2020/5!  
 

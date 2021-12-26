@@ -1,9 +1,0 @@
-Score = 54177898
-Score = 80353635
-Score = 46309696
-Score = 42148760
-Score = 59527559
-Score = 62386980
-Score = 45685997
-Score = 41374046
-Score = 41020794
